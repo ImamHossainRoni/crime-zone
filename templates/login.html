@@ -1,0 +1,142 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Library - Google Font Familys -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  {% load static%}
+  <link rel="shortcut icon" type="image/png" href="{% static 'image/login.png' %}"/>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel='stylesheet' href=" {% static 'css/font-awesome.min.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+  <!-- Add your site or application content here -->
+  <nav class="navbar navbar-expand-lg navbar-light "style="background-color: #e3f2fd;">
+    <a class="navbar-brand" style="font-weight: bold; font-size: 30px;"href="#">CrimeZone</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <div>
+          <input class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Search">
+          <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log In</button>
+        </div>
+        <div>
+          <p class="psw">
+            <a data-toggle="modal" data-target="#forgetpassword" href="#">Forgot password? </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <div class="container-fluid wholebody">
+    <div class="row">
+      <div class="col-md-2">   
+      </div>
+      <div class="col-md-4">
+        <!-- <img src="img/loginpage.jpg"> -->
+        <center> <span class="goal">It let's you know about crime which is occuring around you </span><hr></center>
+      </div>
+      <div class="col-md-6 col-xm-12" style="text-align: center;">
+        <div class="row">
+          <div class="col-md-8 col-xm-12 offset-md-2">
+            <div class="loginform">
+              <h5>Stay Connected With CrimeZone</h5>
+              <!-- registration form -->
+              <form method="POST">
+                  {% csrf_token %}
+                <div class="form-row">
+                  <div class="col">
+                    <input type="text" name="first_name" class="form-control" placeholder="First name" required>
+                  </div>
+                  <div class="col">
+                    <input type="text" name="last_name" class="form-control" placeholder="Last name" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="email" name="username" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required>
+                </div>             
+                <div class="form-group">
+                  <input type="password" name="password1" class="form-control"  placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <input type="password"  name="passwor2"  class="form-control"  placeholder="Confirm Password">
+                </div>
+               
+               <button class="loginbutton btn btn-primary" id="signupbutton" type="submit">Sign Up</button>
+             </form>
+              <!-- registration form End-->
+             <div class="formbox">
+               <p><a href="" data-toggle="modal" data-target="#exampleModal">Terms & Conditions</a> for clicking sign up</p>              
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>         
+     <!-- Modal for Terms & Condition -->
+     <div class="modal animate" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+          </div>
+          <div class="modal-body">
+            <p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern [business name]'s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for Terms & Condition End -->
+
+    <!-- Modal for Forget password -->
+
+    <div class="modal animate" id="forgetpassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Password Recovery</h5>
+          </div>
+          <div class="modal-body">
+           <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">You'll never share your email password with anyone else.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Forget password  End-->
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/fontawesome.min.js' %}"></script>
+<script src="{% static  'js/bootstrap.min.js' %}"></script>
+<script src="{% static  'js/registration.js' %}"></script>
+
+</body>
+
+</html>

@@ -17,3 +17,14 @@ class UserRegistrationView(APIView):
         userlist = UserProfile.objects.all().order_by('id')
         serialized_userlist = UserRegistrationSerializer(userlist,many = True)
         return Response(serialized_userlist.data)
+
+# class UserDetailsView(APIView):
+#     http_method_names = ['get', 'post', 'put', 'delete']
+
+#     def get(self,request,pk,format=None):
+#         userlist = UserProfile.objects.all(pk)
+#         serialized_userlist = UserRegistrationSerializer(userlist,many = True)
+#         return Response(serialized_userlist.data)
+
+def login(request):
+    return render(request,'login.html')
