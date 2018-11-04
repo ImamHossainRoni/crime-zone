@@ -15,6 +15,10 @@ class UserProfile(models.Model):
     profile_pic = models.ImageField(upload_to = 'profile_image',null = True,blank = True) 
     joining_time = models.DateTimeField(auto_now_add=True, auto_now=False)
 
+    @property
+    def get_username(self):
+        return self.user.username if self.user else None
+
     def get_number_of_followers(self):
         print(self.followers.count())
         if self.followers.count():
@@ -29,6 +33,7 @@ class UserProfile(models.Model):
             return 0
     def __str__(self):
         return self.user.username
+
 
 class CrimePost(models.Model):
     user_profile = models.ForeignKey(UserProfile,
@@ -55,8 +60,8 @@ class Comment(models.Model):
         return self.comment
 
 class Reply(models.Model):
-    comment = models.ForeignKey('Comment',on_delete=models.PROTECT)
-    user = models.ForeignKey(User,on_delete=models.PROTECT)
+    comment = models.ForeignKey('Comment',on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     reply = models.CharField(max_length=100)
     replied_on = models.DateTimeField(auto_now_add=True,auto_now=False)
     def __str__(self):
