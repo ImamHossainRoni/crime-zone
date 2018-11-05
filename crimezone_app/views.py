@@ -4,6 +4,25 @@ from rest_framework.response import Response
 from django.shortcuts import render,HttpResponse, redirect
 from  django.http import Http404
 from .models import UserProfile
+from django.contrib.auth import authenticate, login, logout
+
+def registration(request):
+    return render(request,'login.html')
+    
+def home(request):
+    return render(request,'home.html')
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            print("Not matched")
+    return render(request, 'home.html')
 
 class UserRegistrationView(APIView):
     def post(self, request, *args, **kwargs):
@@ -26,5 +45,3 @@ class UserRegistrationView(APIView):
 #         serialized_userlist = UserRegistrationSerializer(userlist,many = True)
 #         return Response(serialized_userlist.data)
 
-def login(request):
-    return render(request,'login.html')

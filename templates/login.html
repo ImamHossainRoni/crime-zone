@@ -24,11 +24,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <!-- login form -->
+      <form class="form-inline my-2 my-lg-0" method="POST">
+          {% csrf_token %}
+          <!-- {{ form.as_p }} -->
         <div>
-          <input class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Search">
-          <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log In</button>
+          <input class="form-control mr-sm-2" name="username" type="email" placeholder="Email">
+          <input class="form-control mr-sm-2" name="password" type="password" placeholder="Password" >
+          <button class="btn btn-outline-success my-2 my-sm-0" name="submit" type="submit">Log In</button>
         </div>
         <div>
           <p class="psw">
@@ -36,6 +39,7 @@
           </p>
         </div>
       </form>
+        <!-- login form End-->
     </div>
   </nav>
   <div class="container-fluid wholebody">
@@ -69,7 +73,7 @@
                   <input type="password" name="password1" class="form-control"  placeholder="Password">
                 </div>
                 <div class="form-group">
-                  <input type="password"  name="passwor2"  class="form-control"  placeholder="Confirm Password">
+                  <input type="password"  name="password2"  class="form-control"  placeholder="Confirm Password">
                 </div>
                
                <button class="loginbutton btn btn-primary" id="signupbutton" type="submit">Sign Up</button>

@@ -14,7 +14,9 @@
             data:{
                 username: $("input[name = 'username']").val(),
                 first_name: $("input[name = 'first_name']").val(),
-                last_name: $("input[name = 'last_name']").val()
+                last_name: $("input[name = 'last_name']").val(),
+                password: $("input[name = 'password1']").val(),
+                confirm_password: $("input[name = 'password2']").val()
               
             }
 
@@ -22,7 +24,7 @@
             console.log("Inserted");
         });
       });
- // User registration End
+        // User registration End
 
 
     })
