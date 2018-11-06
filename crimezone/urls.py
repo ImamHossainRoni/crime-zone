@@ -5,13 +5,8 @@ from django.conf.urls.static import static
 #Project URL
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('crimezone_app.urls')),
-    path('',include("crimezone_app.urls"), name = "home"),
+    path('', include('crimezone_app.urls')),
 ]
-
-
-
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

@@ -40,3 +40,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def get_last_name(self, obj):
         return obj.user.last_name if obj.user else None
+
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    class Meta:
+        fields = ('username', 'password',)

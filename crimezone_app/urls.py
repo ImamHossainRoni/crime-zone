@@ -4,13 +4,8 @@ from .views import *
 #App Url
 
 urlpatterns = [
-    path('create-user/', UserRegistrationView.as_view()),
-    #path('user/<int:pk>/', UserDetailsView.as_view()),
-    path('', views.registration,name="reg"),
-    path('login/', views.login_user,name="login"),
-    path('home/', views.home,name="home"),
-   
-   
-
-
+    path('api/create-user/', UserRegistrationView.as_view()),
+    path('api/login/', LoginApiView.as_view()),
+    path('api/logout/', LogoutView.as_view()),
+    path('', views.index,name="index-view"),
 ]

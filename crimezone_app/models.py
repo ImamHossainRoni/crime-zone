@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User,on_delete = models.PROTECT)
+    user = models.OneToOneField(User,on_delete = models.CASCADE)
     followers = models.ManyToManyField('UserProfile', 
                     related_name='followers_profile',
                     blank=True)
@@ -18,6 +18,15 @@ class UserProfile(models.Model):
     @property
     def get_username(self):
         return self.user.username if self.user else None
+
+    # @property
+    # def name(self):
+    #     try:
+    #         return "{0} {1}".format(
+    #             self.user.first_name, self.user.last_name
+    #         ) if (self.user.first_name or self.user.last_name) is None else self.user.username
+    #     except AttributeError:
+    #         return 'N/A'
 
     def get_number_of_followers(self):
         print(self.followers.count())

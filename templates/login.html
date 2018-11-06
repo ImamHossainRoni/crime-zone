@@ -25,13 +25,13 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <!-- login form -->
-      <form class="form-inline my-2 my-lg-0" method="POST">
+      <form class="form-inline my-2 my-lg-0">
           {% csrf_token %}
           <!-- {{ form.as_p }} -->
         <div>
           <input class="form-control mr-sm-2" name="username" type="email" placeholder="Email">
           <input class="form-control mr-sm-2" name="password" type="password" placeholder="Password" >
-          <button class="btn btn-outline-success my-2 my-sm-0" name="submit" type="submit">Log In</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" id="login-btn" name="submit" type="button">Log In</button>
         </div>
         <div>
           <p class="psw">
@@ -67,7 +67,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" name="username" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required>
+                  <input type="email" name="email" class="form-control" placeholder="Enter email" required>
                 </div>             
                 <div class="form-group">
                   <input type="password" name="password1" class="form-control"  placeholder="Password">
@@ -76,7 +76,7 @@
                   <input type="password"  name="password2"  class="form-control"  placeholder="Confirm Password">
                 </div>
                
-               <button class="loginbutton btn btn-primary" id="signupbutton" type="submit">Sign Up</button>
+               <button class=" btn btn-primary" id="signupbutton" type="submit">Sign Up</button>
              </form>
               <!-- registration form End-->
              <div class="formbox">
