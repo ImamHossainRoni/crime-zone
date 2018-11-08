@@ -2,7 +2,7 @@
 (function ($) {
     $(document).ready(function () {
 
-        // User registration
+        
         $("#login-btn").on('click', function(){
             console.log("Submit")
         $.ajax({
@@ -24,7 +24,7 @@
         // location.reload();
       });
 
-
+// User registration
     $("#signupbutton").on('click', function(){ 
     $.ajax({
         url:'/api/create-user/',

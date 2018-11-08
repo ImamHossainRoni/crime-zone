@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .serailizers import UserRegistrationSerializer, UserLoginSerializer
+from .serailizers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
 from rest_framework.response import Response
 from rest_framework import generics, status
 from django.shortcuts import render,HttpResponse, redirect
@@ -8,11 +8,11 @@ from  django.http import Http404
 from .models import UserProfile
 from django.contrib.auth import authenticate, login,logout
 
-'''home page view'''
+'''login page view'''
 def index(request):
     return render(request,'login.html')
 
-'''LogIn api view'''
+'''Login api view'''
 class LoginApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = UserLoginSerializer(data=request.data)
@@ -26,7 +26,7 @@ class LoginApiView(APIView):
                 return Response(data={'success': True})
         return Response(data={'success': False})
 
-'''LogOut api view'''
+'''Logout api view'''
 class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
         response_data = {
@@ -63,3 +63,13 @@ class UserDetailsView(APIView):
         serialized_userlist = UserRegistrationSerializer(userlist,many = True)
         return Response(serialized_userlist.data)
 
+class UserProfileApiView(APIView):
+    def get_object(self, pk):
+        try:
+            return UserProfile.objects.get(pk=pk)
+        except UserProfile.DoesNotExist:
+            raise Http404
+    def get(self,request,  pk, format=None):
+        userlist = self.get_object(pk)
+        serialized_userlist =UserProfileSerializer(userlist)
+        return Response(serialized_userlist.data)

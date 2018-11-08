@@ -17,16 +17,7 @@ class UserProfile(models.Model):
 
     @property
     def get_username(self):
-        return self.user.username if self.user else None
-
-    # @property
-    # def name(self):
-    #     try:
-    #         return "{0} {1}".format(
-    #             self.user.first_name, self.user.last_name
-    #         ) if (self.user.first_name or self.user.last_name) is None else self.user.username
-    #     except AttributeError:
-    #         return 'N/A'
+        return self.user.first_name +''+self.last_name if self.user else None
 
     def get_number_of_followers(self):
         print(self.followers.count())
