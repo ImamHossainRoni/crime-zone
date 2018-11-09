@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login,logout
 '''login page view'''
 def index(request):
     return render(request,'login.html')
+def lol(request):
+    return render(request,'index.html')
 
 '''Login api view'''
 class LoginApiView(APIView):
@@ -64,12 +66,7 @@ class UserDetailsView(APIView):
         return Response(serialized_userlist.data)
 
 class UserProfileApiView(APIView):
-    def get_object(self, pk):
-        try:
-            return UserProfile.objects.get(pk=pk)
-        except UserProfile.DoesNotExist:
-            raise Http404
-    def get(self,request,  pk, format=None):
-        userlist = self.get_object(pk)
-        serialized_userlist =UserProfileSerializer(userlist)
+    def get(self,request, *args, **kwargs):
+        user = request.user.userprofile
+        serialized_userlist =UserProfileSerializer(user)
         return Response(serialized_userlist.data)

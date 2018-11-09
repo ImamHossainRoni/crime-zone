@@ -1,0 +1,195 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+
+{% block profile %}
+  <div class="col-md-3 left_sidebar">
+    <div class="total-pp">
+      <div class="user-profile-background">
+        <div class="user-profile-pp">
+          <img src="image/fav.png">
+        </div>
+        <div class="user-pp">
+          <h5 class="name">Md.Imam Hossain Roni</h5>
+          <p class="email">Email:imam@gmail.com</p>
+          <p class="fa fa-map-marker loc"> Dhaka</p>
+          <p class="fa fa-clock-o datetime" > Joining time</p>
+        </div>
+        <div class="option">
+          <p>  <a  class="fa fa-th menu" href="user.html"></a></p>
+        </div>
+        <div class="border"></div>
+        <div class="other">
+          <p><a href="">Who's viewed your profile</a> 100</p>
+          <p><a href="">Views of your post</a> 45</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block content %}
+  <div class="col-md-6 main_content">
+    <div class="card">
+      <div class="card-header">
+        <div class="col-2 profile_picture"><img src="image/profile_image.jpg" alt=""></div>
+        <div class="col-10 friend_name">
+          <div class="friend_name_description">
+            <a href="#">FRIEND NAME  </a><i class="fa fa-globe"></i>
+            <br>
+            <p class="fa fa-clock-o 
+            "> Today at 19.33</p>
+            <p class="fa fa-map-marker location"> at Uttara</p>
+          </div>
+
+          <div class="modal_content">
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="fa fa-cog settingslogo" data-toggle="modal" data-target="#myModal"></button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 </div>
+                 <div class="modal-body">
+                  <p><a href="#">Hide from timeline</a></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="card-body main_content">
+      <p>Progressively harness competitive partnerships vis-a-vis efficient users. Continually morph state of the art scenarios without client-focused infrastructures. Distinctively predominate one-to-one value whereas client-focused experiences. Conveniently simplify.<a class="readmore" href="">Read More</a>
+      </p>    
+      <p><img src="image/post.jpg" alt=""></p>
+    </div>
+    <div class="card-footer">
+      <form>
+        <div class="col-4 like">
+          <a  class="fa fa-star-o likebutton" href="#"> Star</a>
+        </div>
+        <div class="col-6 comment ">
+          <a class="fa fa-comment-o commentbutton" href="#"> Comment</a>
+        </div>
+        <div class="col-2 share">
+          <a class="fa fa-share-alt sharebutton" href="#"> Share</a>
+        </div>
+        <div class="space"></div>
+        <div class="form-group write-comment">
+          <i class="fa fa-comments-o icon"></i>
+          <input type="text" class="form-control commentbox"  placeholder="Say something ">
+        </div>
+
+        <div class="comment-show">
+          <div class="comment-pp">
+            <img src="image/profile_image.jpg" alt="">
+          </div>
+          <div class="comment-txt">
+            <p class="comment-user-name"><a href=""><b>FriendName</b></a> It was awesomdsfasdfdasfdsfdasfdasfdsfasdfdasfdas bangladesh is a coool country but lol e</p>
+          </div>
+          <!-- <div class="comment-reply">
+            <p>12.45 am</p>
+            <button>Reply</button>
+          </div> -->
+        </div>
+
+        <div class="reply-show">
+          <div class="reply-pp">
+            <img src="image/profile_image.jpg" alt="">
+          </div>
+          <div class="reply-txt">
+            <p class="reply-user-name"><a href=""><b>FriendName</b></a> It was awesome</p>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block feed %}
+<div class="col-md-3 right_sidebar ">
+  <div class="total-rr ">
+    <div class="first-rr">
+      <p class="feed">Add To Your Feed</p>
+      <hr>
+      <div class="follower-show-border">
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+        <div class="follower-show">
+          <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+          <div class="follower-txt">
+            <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat">
+      <center>
+        <a href="chating.html"><button class=" chatbutton btn btn-info">Start Chating</button></a> 
+      </center>
+   </div>
+ </div>
+
+</div>
+{% endblock %}

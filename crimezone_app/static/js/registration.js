@@ -2,7 +2,19 @@
 (function ($) {
     $(document).ready(function () {
 
-        
+        $.ajax({
+            url:'/api/user/',
+            method: 'GET',
+            headers: {
+                "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
+                "Content-Type": 'application/json'
+            },
+
+        }).then(function(res){
+            console.log(res)
+        });
+
+        // User login 
         $("#login-btn").on('click', function(){
             console.log("Submit")
         $.ajax({
@@ -19,10 +31,14 @@
             })
 
         }).then(function(res){
-            console.log(res);
+            if(res.success) {
+                window.location.href = '/lol'
+            }
         });
         // location.reload();
       });
+
+// User login end
 
 // User registration
     $("#signupbutton").on('click', function(){ 
@@ -43,11 +59,11 @@
         })
 
     }).then(function(res){
-        console.log(res);
+        // console.log(res);
     });
     location.reload();
   });
-
+// User registration End
 
 
 

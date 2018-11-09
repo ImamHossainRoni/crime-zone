@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!--creator Md.Imam Hossain Roni-->
+<html>
+<head>
+  <title>CrimeZone</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="image/fav.png"/>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="headersection " id="fixed_nav">
+    <div class="container-fluid navcontainer">
+      <nav class=" navbar navbar-expand-lg   navbar-light  navcontainer2 ">
+        <a class="navbar-brand" href="#">CrimeZone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="fa fa-home nav-link" href="index.html"> Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fa fa-support  
+              " href="#">  Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fa fa-sun-o  
+              " href="#"> Notifications</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle fa fa-cogs" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Settings</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Security</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Delete Account</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Log Out</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fa fa-send-o
+              " href="#"data-toggle="modal" data-target="#createpost" > Create Post</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </div>
+
+  </header>
+  <!-- modal for creating post -->
+  <div class="modal animate" id="createpost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Write about crime</h5>
+        </div>
+        <div class="modal-body">
+         <form>
+          <div class="form-group">
+           <textarea class="form-control" aria-label="With textarea"></textarea>
+           <div><hr></div>
+           <div class="fileload fright">
+            <a class="fa fa-file-photo-o" href=""></a>
+            <a class="fa fa-film" href=""></a>
+            <a class="fa fa-camera" href=""></a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-primary">Post</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- modal for creating post end -->
+<div class=" maincontainer container-fluid">
+  <div class="col-md-3 left_sidebar">
+    <div class="total-pp">
+      <div class="user-profile-background">
+        <div class="user-profile-pp">
+          <img src="image/fav.png">
+        </div>
+        <div class="user-pp">
+          <h5 class="name">Md.Imam Hossain Roni</h5>
+          <p class="email">Email:imam@gmail.com</p>
+          <p class="fa fa-map-marker loc"> Dhaka</p>
+          <p class="fa fa-clock-o datetime" > Joining time</p>
+        </div>
+        <div class="option">
+          <p>  <a  class="fa fa-th menu" href="user.html"></a></p>
+        </div>
+        <div class="border"></div>
+        <div class="other">
+          <p><a href="">Who's viewed your profile</a> 100</p>
+          <p><a href="">Views of your post</a> 45</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- middle content -->
+  <div class="col-md-6 main_content">
+    <div class="chat-title">
+      <h5>Chat Messages</h5>
+    </div>
+    <div class="conversation">
+      <div class="receivercontainer ">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+      </div>
+
+      <div class="sendercontainer">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+      </div>
+      <div class="receivercontainer ">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+      </div>
+
+      <div class="sendercontainer">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+      </div>
+      <div class="receivercontainer ">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+      </div>
+
+      <div class="sendercontainer">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+      </div>
+      <div class="receivercontainer ">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+      </div>
+
+      <div class="sendercontainer">
+        <img src="image/profile_image.jpg" alt="Avatar" style="width:100%;">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+      </div>
+    </div>
+    <div class="sendingbox">
+      <form>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <button class="btn btn-secondary">Send</button> 
+      </form>
+    </div>
+  </div>
+  <!-- middle content End -->
+  <div class="col-md-3 right_sidebar ">
+    <div class="total-rr ">
+      <div class="first-rr">
+        <p class="feed">Add To Your Feed</p>
+        <hr>
+        <div class="follower-show-border">
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+          <div class="follower-show">
+            <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+            <div class="follower-txt">
+              <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat">
+        <center>
+          <a href="index.html"><button class=" chatbutton btn btn-danger">Close Chating</button></a> 
+        </center>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- static file -->
+<script src="js/jquery.js"></script>
+<script src="js/fontawesome.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<!-- static file end -->
+</body>
+</html>
+

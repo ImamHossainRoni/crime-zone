@@ -102,18 +102,21 @@ button{
  text-decoration: none;
  cursor: pointer;
  opacity: .7;
+ color: black;
 }
 
 .commentbutton:hover{
   text-decoration: none;
   cursor: pointer;
   opacity: .7;
+  color: black;
 }
 
 .sharebutton:hover{
  text-decoration: none;
  cursor: pointer;
  opacity: .7;
+ color: black;
 }
 
 .write-comment{
@@ -139,7 +142,7 @@ button{
   display: -ms-flexbox; /* IE10 */
   display: flex;
   width: 100%;
-  background:#FFFFFF;
+  /*background:#FFFFFF;*/
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 2px;
   margin-bottom: 2px;
@@ -157,6 +160,35 @@ button{
   outline: none;
 }
 .comment-user-name{}
+
+.comment-extra{
+  margin: 0;
+  padding: 0;
+}
+.reply-show{
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  background:#FFFFFF;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 2px;
+  margin-bottom: 2px;
+  margin-left: 30px;
+  width: 95%;
+}
+.reply-pp img{
+ display: block;
+ width: 25px;
+ height: 25px;
+ padding-top:5px; 
+ padding-left: 5px;
+}
+.reply-txt{
+  width: 100%;
+  padding-left: 5px;
+  outline: none;
+}
+.reply-user-name{}
 
 .space{
  padding-top: 20px;
@@ -236,6 +268,80 @@ button{
 .first-rr{
   padding:5px;
 }
+.chatbutton{
+ margin-top: 50px;
+}
+/*chatting*/
+.conversation{
+  overflow-x: auto;
+}
+.receivercontainer::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.receivercontainer{
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+.receivercontainer img{
+   float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.time-right{
+  float: right;
+  color:#ADD8E6;
+}
+.time-left{
+  float: left;
+  color:#ADD8E6;
+}
+.sendercontainer::after {
+    content: "";
+    clear: both;
+    display: table;
+} 
+.sendercontainer {
+    border: 2px solid #dedede;
+    background-color: #FFFFF1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+.sendercontainer  img{
+   float: right;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+    margin-right: 0px;i
+}
+.sendingbox{
+    position: fixed;
+    bottom: 0;
+    width: 603px;
+    z-index: 999;
+    background: whitesmoke;
+}
+ 
+.sendingbox button{
+  margin-top: 5px;
+  float: right;
+ 
+}
+.chat-title{
+  color: gray;
+}
+.chat{
+  margin-bottom: 5px;
+}
+/*chatting end*/
 .feed{
   text-align: center;
 }
@@ -243,7 +349,7 @@ button{
   padding: 5px;
 }
 .follower-show-border{
-  height: 260px;
+  height: 350px;
   width: 100%;
   background:#FFFFF5;
   border: 1px solid rgba(0,0,0,.125);
