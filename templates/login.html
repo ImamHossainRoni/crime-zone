@@ -29,7 +29,7 @@
           {% csrf_token %}
           <!-- {{ form.as_p }} -->
         <div>
-          <input class="form-control mr-sm-2" name="username" type="email" placeholder="Email">
+          <input class="form-control mr-sm-2" name="username" type="email" placeholder="Email" required>
           <input class="form-control mr-sm-2" name="password" type="password" placeholder="Password" >
           <button class="btn btn-outline-success my-2 my-sm-0" id="login-btn" name="submit" type="button">Log In</button>
         </div>

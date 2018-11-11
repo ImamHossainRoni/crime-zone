@@ -33,7 +33,7 @@ class UserProfile(models.Model):
 
     @property
     def get_username(self):
-        return self.user.first_name +''+self.last_name if self.user else None
+        return self.user.first_name +' '+self.user.last_name if self.user else None
 
     def get_number_of_followers(self):
         print(self.followers.count())
@@ -48,8 +48,7 @@ class UserProfile(models.Model):
         else:
             return 0
     def __str__(self):
-        return self.user.username
-
+        return self.get_username
 
 class CrimePost(models.Model):
     user_profile = models.ForeignKey(UserProfile,

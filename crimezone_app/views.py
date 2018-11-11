@@ -1,4 +1,7 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
+from rest_framework.authentication import SessionAuthentication
 from .serailizers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
 from rest_framework.response import Response
 from rest_framework import generics, status
@@ -9,10 +12,17 @@ from .models import UserProfile
 from django.contrib.auth import authenticate, login,logout
 
 '''login page view'''
+@csrf_exempt
 def index(request):
     return render(request,'login.html')
-def lol(request):
-    return render(request,'index.html')
+""" Home page after successful login"""
+def home(request):
+    data = request.user.userprofile
+    context = {
+        "data": data
+    }
+    return render(request,'index.html',context)
+
 
 '''Login api view'''
 class LoginApiView(APIView):
@@ -30,13 +40,17 @@ class LoginApiView(APIView):
 
 '''Logout api view'''
 class LogoutView(APIView):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LogoutView, self).dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         response_data = {
             "status": status.HTTP_204_NO_CONTENT,
             "message": "Successfully logout."
         }
         try:
-            request.user.auth_token.delete()
+            request.session.flush()
             return Response(data=response_data)
         except (AttributeError, ObjectDoesNotExist):
             response_data['status'] = status.HTTP_400_BAD_REQUEST
@@ -66,6 +80,10 @@ class UserDetailsView(APIView):
         return Response(serialized_userlist.data)
 
 class UserProfileApiView(APIView):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserProfileApiView, self).dispatch(request, *args, **kwargs)
+
     def get(self,request, *args, **kwargs):
         user = request.user.userprofile
         serialized_userlist =UserProfileSerializer(user)

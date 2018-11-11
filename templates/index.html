@@ -5,16 +5,25 @@
 
 {% block profile %}
   <div class="col-md-3 left_sidebar">
-    <div class="total-pp">
-      <div class="user-profile-background">
+    <div class="total-pp" id="user-profile">
+        <div class="user-profile-background">
         <div class="user-profile-pp">
-          <img src="image/fav.png">
+
+        {% if data.profile_pic %}
+          <img src="{{ data.profile_pic.url }}">
+          {% else %}
+        <img src="{% static  'image/fav.png' %}">
+        {% endif%}
         </div>
-        <div class="user-pp">
-          <h5 class="name">Md.Imam Hossain Roni</h5>
-          <p class="email">Email:imam@gmail.com</p>
+        <div class="user-pp" id="user-profile">
+
+
+
+          <h5 class="name">{{ data.get_username }}</h5>
+          <p class="email">{{ data.user.username }}</p>
           <p class="fa fa-map-marker loc"> Dhaka</p>
-          <p class="fa fa-clock-o datetime" > Joining time</p>
+          <p class="fa fa-clock-o datetime" > {{ data.joining_time }}</p>
+
         </div>
         <div class="option">
           <p>  <a  class="fa fa-th menu" href="user.html"></a></p>
@@ -25,6 +34,7 @@
           <p><a href="">Views of your post</a> 45</p>
         </div>
       </div>
+
     </div>
   </div>
   {% endblock %}
@@ -36,6 +46,9 @@
         <div class="col-2 profile_picture"><img src="image/profile_image.jpg" alt=""></div>
         <div class="col-10 friend_name">
           <div class="friend_name_description">
+            <div class="idno">
+             <p class="pp"></p>
+            </div>
             <a href="#">FRIEND NAME  </a><i class="fa fa-globe"></i>
             <br>
             <p class="fa fa-clock-o 

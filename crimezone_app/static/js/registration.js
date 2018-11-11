@@ -1,27 +1,15 @@
 
 (function ($) {
     $(document).ready(function () {
-
-        $.ajax({
-            url:'/api/user/',
-            method: 'GET',
-            headers: {
-                "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
-                "Content-Type": 'application/json'
-            },
-
-        }).then(function(res){
-            console.log(res)
-        });
-
         // User login 
         $("#login-btn").on('click', function(){
-            console.log("Submit")
+            //console.log("Submit")
+
         $.ajax({
             url:'/api/login/',
             method: 'POST',
             headers: {
-                "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
+                "X-CSRFToken": localStorage.getItem('csrf_token'),
                 "Content-Type": 'application/json'
             },
             data: JSON.stringify({
@@ -32,10 +20,16 @@
 
         }).then(function(res){
             if(res.success) {
-                window.location.href = '/lol'
+                window.location.href = '/home'
+              
+            }
+            else{
+                window.alert("Username or Password not matched !")
             }
         });
         // location.reload();
+     
+       
       });
 
 // User login end
@@ -46,7 +40,7 @@
         url:'/api/create-user/',
         method: 'POST',
         headers: {
-            "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
+            "X-CSRFToken": localStorage.getItem('csrf_token'),
             "Content-Type": 'application/json'
         },
         data: JSON.stringify({
@@ -61,10 +55,25 @@
     }).then(function(res){
         // console.log(res);
     });
-    location.reload();
+    //location.reload();
   });
-// User registration End
+// User registration End      
+    $("#logout-btn").on('click', function(){
+            $.ajax({
+            url:'/api/logout/',
+            method: 'POST',
+            headers: {
+                "X-CSRFToken": localStorage.getItem('csrf_token'),
+                "Content-Type": 'application/json'
+            },
 
+
+        }).then(function(res){
+            console.log("done");
+            window.location.href = '/'
+        });
+
+      });
 
 
 })
