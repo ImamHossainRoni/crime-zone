@@ -79,6 +79,7 @@ class Reply(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     reply = models.CharField(max_length=100)
     replied_on = models.DateTimeField(auto_now_add=True,auto_now=False)
+    
     def __str__(self):
         return self.reply
 

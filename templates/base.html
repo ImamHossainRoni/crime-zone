@@ -66,21 +66,24 @@
           <h5 class="modal-title" id="exampleModalLabel">Write about crime</h5>
         </div>
         <div class="modal-body">
-         <form>
+         <form method="POST" action="/api/post/" enctype="multipart/form-data">
+            {% csrf_token %}
           <div class="form-group">
-           <textarea class="form-control" aria-label="With textarea"></textarea>
+           <textarea class="form-control" name="title" aria-label="With textarea"></textarea>
            <div><hr></div>
-           <div class="fileload fright">
+           <div class="fileload">
+                <!--
             <a class="fa fa-file-photo-o" href=""></a>
             <a class="fa fa-film" href=""></a>
-            <a class="fa fa-camera" href=""></a>
+            <a class="fa fa-camera" href=""></a> -->
+            <input type="file" id="postimage" name="postimage">
           </div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-primary">Post</button>
+      <button type="button" id="post" class="btn btn-primary">Post</button>
     </div>
   </div>
 </div>
@@ -96,6 +99,7 @@
         {% endblock %}
         {% block feed %}
         {% endblock %}
+     
 </div>
 
 
@@ -108,7 +112,7 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/fontawesome.min.js' %}"></script>
 <script src="{% static  'js/bootstrap.min.js' %}"></script>
-<script src="{% static  'js/registration.js' %}"></script>
+<script src="{% static  'js/script.js' %}"></script>
 <script src="{% static  'js/vue.js' %}"></script>
 <script src="{% static  'js/app.js' %}"></script>
 <script src="{% static  'js/axios.js' %}"></script>

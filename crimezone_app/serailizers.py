@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile
+from .models import UserProfile,CrimePost
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -52,4 +52,11 @@ class UserLoginSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
+        fields = "__all__"
+
+    ''' CrimePost Seralizer'''
+class CrimePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrimePost
+        # fields = ("images",)
         fields = "__all__"

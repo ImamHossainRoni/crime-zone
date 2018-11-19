@@ -11,4 +11,7 @@ urlpatterns = [
     path('home/', views.home,name="home-view"),
     path('signout/', views.LogoutView.as_view()),
 
+    path('api/post/', CrimePostApiView.as_view()),
+
+    
 ]
