@@ -20,7 +20,7 @@
 
             }).then(function (res) {
                 if (res.success) {
-                    window.location.href = '/home'
+                    window.location.href = '/post'
 
                 }
                 else {
@@ -108,6 +108,7 @@
             }).then(function (res) {
                 // console.log(res);
                 console.log("Done");
+                 location.reload();
             });
         });
         // insert post end

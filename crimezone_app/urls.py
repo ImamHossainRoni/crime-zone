@@ -8,11 +8,11 @@ urlpatterns = [
     path('api/logout/', LogoutView.as_view()),
     path('api/user/', UserProfileApiView.as_view()),
     path('', views.index,name="index-view"),
-    path('home/', views.home,name="home-view"),
     path('signout/', views.LogoutView.as_view()),
 
     path('api/post/', CrimePostApiView.as_view()),
     path('post/', views.postview,name="post-view"),
+    path('commonpost/', views.post_In_home,name="post-in-home-view"),
 
     
 ]

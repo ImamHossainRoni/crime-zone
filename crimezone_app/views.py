@@ -23,28 +23,35 @@ def index(request):
 """ Home page after successful login"""
 
 
-def home(request):
-    data = request.user.userprofile
-    context = {
-        "data": data
-    }
-    return render(request, 'index.html', context)
+# def home(request):
+#     data = request.user.userprofile
+#     context = {
+#         "data": data
+#     }
+#     return render(request, 'index.html', context)
 
 
 ''' post view '''
 def postview(request):
     data = request.user.userprofile
     posts = CrimePost.objects.filter(user_profile=request.user.userprofile).order_by('-posted_on')
-    common_post = CrimePost.objects.all().order_by('-posted_on')
     context = {
         "data":data,
         "posts":posts,
-        "common_post":common_post
     }
     return render(request,'index.html',context)
+
+''' post in home view'''
+def post_In_home(request):
+    data = request.user.userprofile
+    common_post = CrimePost.objects.all().order_by('-posted_on')
+    context = {
+        "data":data,
+        "common_post":common_post
+    }
+    return render(request,'home.html',context)
+
 '''Login api view'''
-
-
 class LoginApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = UserLoginSerializer(data=request.data)

@@ -13,13 +13,13 @@
          
           {% else %}
         <img src="{% static  'image/fav.png' %}">
-        {% endif %}
+        {% endif%}
         </div>
         <div class="user-pp" id="user-profile">
 
 
 
-          <h5 class="name">{{ data.get_username }} </h5>
+          <h5 class="name">{{ data.get_username }}</h5>
           <p class="email">{{ data.user.username }}</p>
           <p class="fa fa-map-marker loc"> Dhaka</p>
           <p class="fa fa-clock-o datetime" > {{ data.joining_time }}</p>
@@ -96,18 +96,19 @@
 
   {% block content %}
   <div class="col-md-6 main_content">
-      {%  for post in posts%}
+      {%  for post in common_post %}
     <div class="card">
       <div class="card-header">
-         
-        <div class="col-2 profile_picture"><img src="{{data.profile_pic.url}}" alt="nopp"></div>
+        {% if post.user_profile.profile_pic %}
+        <div class="col-2 profile_picture"><img src="{{ post.user_profile.profile_pic.url }}" alt=""></div>
+        {% endif %}
         <div class="col-10 friend_name">
           <div class="friend_name_description">
             <div class="idno">
              <p class="pp"></p>
             </div>
             
-            <a href="#">{{post.user_profile}}</a><i class="fa fa-globe"></i>
+            <a href="#">{{post.user_profile}} </a><i class="fa fa-globe"></i>
             <br>
             <p class="fa fa-clock-o 
             "> {{post.posted_on }}</p>
