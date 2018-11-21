@@ -8,9 +8,9 @@
     <div class="total-pp" id="user-profile">
         <div class="user-profile-background">
         <div class="user-profile-pp">
-
         {% if data.profile_pic %}
-          <img src="{{ data.profile_pic.url }}">
+        <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
+         
           {% else %}
         <img src="{% static  'image/fav.png' %}">
         {% endif%}
@@ -96,19 +96,23 @@
 
   {% block content %}
   <div class="col-md-6 main_content">
+      {%  for post in posts%}
     <div class="card">
       <div class="card-header">
-        <div class="col-2 profile_picture"><img src="image/profile_image.jpg" alt=""></div>
+         
+        <div class="col-2 profile_picture"><img src="{{data.profile_pic.url}}" alt="nopp"></div>
         <div class="col-10 friend_name">
           <div class="friend_name_description">
             <div class="idno">
              <p class="pp"></p>
             </div>
-            <a href="#">FRIEND NAME  </a><i class="fa fa-globe"></i>
+            
+            <a href="#">{{post.user_profile}}</a><i class="fa fa-globe"></i>
             <br>
             <p class="fa fa-clock-o 
-            "> Today at 19.33</p>
+            "> {{post.posted_on }}</p>
             <p class="fa fa-map-marker location"> at Uttara</p>
+            
           </div>
 
           <div class="modal_content">
@@ -133,13 +137,16 @@
           </div>
         </div>
       </div>
-
+     
 
     </div>
     <div class="card-body main_content">
-      <p>Progressively harness competitive partnerships vis-a-vis efficient users. Continually morph state of the art scenarios without client-focused infrastructures. Distinctively predominate one-to-one value whereas client-focused experiences. Conveniently simplify.<a class="readmore" href="">Read More</a>
+        {% if post.images %}
+      <p><img src="{{ post.images.url }}" alt="noimg"></p>
+      {% endif %}
+      <p>{{post.title}}<a class="readmore" href="">Read More</a>
       </p>    
-      <p><img src="image/post.jpg" alt=""></p>
+      
     </div>
     <div class="card-footer">
       <form>
@@ -184,6 +191,7 @@
 
     </div>
   </div>
+  {% endfor %}
 </div>
 {% endblock %}
 

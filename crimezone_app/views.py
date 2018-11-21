@@ -31,6 +31,17 @@ def home(request):
     return render(request, 'index.html', context)
 
 
+''' post view '''
+def postview(request):
+    data = request.user.userprofile
+    posts = CrimePost.objects.filter(user_profile=request.user.userprofile).order_by('-posted_on')
+    common_post = CrimePost.objects.all().order_by('-posted_on')
+    context = {
+        "data":data,
+        "posts":posts,
+        "common_post":common_post
+    }
+    return render(request,'index.html',context)
 '''Login api view'''
 
 

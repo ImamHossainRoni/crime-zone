@@ -12,6 +12,7 @@ urlpatterns = [
     path('signout/', views.LogoutView.as_view()),
 
     path('api/post/', CrimePostApiView.as_view()),
+    path('post/', views.postview,name="post-view"),
 
     
 ]
