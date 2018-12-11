@@ -22,8 +22,7 @@
                 if (res.success) {
                     window.location.href = '/post'
 
-                }
-                else {
+                } else {
                     window.alert("Username or Password not matched !")
                 }
             });
@@ -76,6 +75,7 @@
         });
 
         var uploadImageString = "";
+
         function readFile() {
             if (this.files && this.files[0]) {
                 var FR = new FileReader();
@@ -87,6 +87,7 @@
             }
 
         }
+
         document.getElementById('postimage').addEventListener('change', readFile);
         console.log(uploadImageString);
 
@@ -108,11 +109,26 @@
             }).then(function (res) {
                 // console.log(res);
                 console.log("Done");
-                 location.reload();
+                location.reload();
             });
         });
         // insert post end
 
+        // Modal data show
+        $('#postdetails').on('show.bs.modal', function (e) {
+            var picUrl = ($(e.relatedTarget).data('photo'));
+            var status = ($(e.relatedTarget).data('status'));
+            if (picUrl) {
+                $('#m-post-img').html('<img src="' + picUrl + '" alt="' + status + '"/>');
+            }
+            $('#m-post-title').html(status)
+        });
+
+        // Comment Part
+        $("#comment-form").on('submit', function (e) {
+            e.preventDefault();
+            var commentText = $('#comment-input').val();
+        });
 
     })
 })(jQuery);
