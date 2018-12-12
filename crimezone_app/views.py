@@ -9,13 +9,13 @@ from rest_framework.authentication import SessionAuthentication
 
 from crimezone_app.models import Comment
 from crimezone_app.serailizers import CommentSerializer
-from .serailizers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer, CrimePostSerializer,CommentSerializer
+from .serailizers import *
 from rest_framework.response import Response
 from rest_framework import generics, status
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
-from .models import UserProfile, CrimePost
+from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
@@ -209,6 +209,44 @@ class CommentApiView(APIView):
 
     def post(self, request, *args, **kwargs):
         _serializer = CommentSerializer(data=request.data)
+        if _serializer.is_valid(raise_exception=True):
+            _serializer.save()
+            return Response(data=_serializer.data)
+        return Response(data={'message': 'An error occured.'})
+
+class ReplyApiView(APIView):
+    def get_object(self, pk):
+        try:
+            return Reply.objects.get(pk=pk)
+        except Reply.DoesNotExist:
+            raise Http404
+
+    def get(self, request):
+        reply_list = Reply.objects.all()
+        serialized_reply_list = ReplySerializer(reply_list, many=True)
+        return Response(serialized_reply_list.data)
+
+    def post(self, request, *args, **kwargs):
+        _serializer = ReplySerializer(data=request.data)
+        if _serializer.is_valid(raise_exception=True):
+            _serializer.save()
+            return Response(data=_serializer.data)
+        return Response(data={'message': 'An error occured.'})
+
+class LikeApiView(APIView):
+    def get_object(self, pk):
+        try:
+            return Like.objects.get(pk=pk)
+        except Like.DoesNotExist:
+            raise Http404
+
+    def get(self, request):
+        total = Like.objects.all()
+        serialized_like = LikeSerializer(total, many=True)
+        return Response(serialized_like.data)
+
+    def post(self, request, *args, **kwargs):
+        _serializer = LikeSerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
             _serializer.save()
             return Response(data=_serializer.data)

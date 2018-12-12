@@ -13,6 +13,8 @@ urlpatterns = [
     path('post/', views.postview,name="post-view"),
     path('commonpost/', views.post_In_home,name="post-in-home-view"),
     path('test/', views.add_feed,name="following_user"),
-    path('comment/', CommentApiView.as_view()),
+    path('api/comment/', CommentApiView.as_view()),
+    path('api/reply/',ReplyApiView.as_view()),
+    path('api/like/',LikeApiView.as_view()),
 
 ]
