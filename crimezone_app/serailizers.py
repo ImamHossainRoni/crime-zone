@@ -72,13 +72,21 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+        read_only_fields = ('user',)
+
+    def save(self, **kwargs):
+        return super(CommentSerializer, self).save(**kwargs)
+
 
 class ReplySerializer(serializers.ModelSerializer):
     class Meta:
         model = Reply
         fields = '__all__'
-        
+        read_only_fields = ('user',)
+
+
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = '__all__'
+        read_only_fields = ('user',)

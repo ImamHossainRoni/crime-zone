@@ -190,12 +190,6 @@ class CrimePostApiView(APIView):
 
 
 class CommentApiView(APIView):
-    # serializer_class = CommentSerializer
-    # queryset = Comment.objects.all()
-    # permission_classes = (AllowAny,)
-    #
-    # def perform_create(self, serializer):
-    #     serializer.save()
     def get_object(self, pk):
         try:
             return Comment.objects.get(pk=pk)
@@ -210,9 +204,10 @@ class CommentApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = CommentSerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
-            _serializer.save()
+            _serializer.save(user=request.user)
             return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})
+
 
 class ReplyApiView(APIView):
     def get_object(self, pk):
@@ -229,9 +224,10 @@ class ReplyApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = ReplySerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
-            _serializer.save()
+            _serializer.save(user=request.user)
             return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})
+
 
 class LikeApiView(APIView):
     def get_object(self, pk):
@@ -248,7 +244,6 @@ class LikeApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = LikeSerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
-            _serializer.save()
+            _serializer.save(user=request.user)
             return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})
-
