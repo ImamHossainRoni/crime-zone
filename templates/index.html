@@ -68,7 +68,7 @@
                                 </tr>
                                 <tr>
                                     <th>Password</th>
-                                    <td>123</td>
+                                    <td>******</td>
                                     <td>
                                         <button class="btn btn-secondary">Change</button>
                                     </td>
@@ -148,7 +148,7 @@
                         {% if post.title|length|get_digit:"-1" > 100 %}
                             {{ post.title|truncatechars:100 }}
                             <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
-                                data-photo="{{ post.images.url }}" data-status="{{ post.title }}" >
+                               data-photo="{{ post.images.url }}" data-status="{{ post.title }}">
                                 Read More
                             </a>
                         {% else %}
@@ -161,7 +161,14 @@
                 <div class="card-footer">
                     <form id="comment-form" action="#">
                         <div class="col-4 like">
-                            <a class="fa fa-star-o likebutton" href="#"> Star</a>
+                            <a class="fa fa-star-o likebutton" data-post="{{ post.id }}">
+                                {% if post.is_liked_by_me %}
+                                    <span class="like-unlike-btn-text-{{ post.id }}">Unstar</span>
+                                {% else %}
+                                    <span class="like-unlike-btn-text-{{ post.id }}">Star</span>
+                                {% endif %}
+                                <span id="like-count-{{ post.id }}">({{ post.like_set.count }})</span>
+                            </a>
                         </div>
                         <div class="col-6 comment ">
                             <a class="fa fa-comment-o commentbutton" href="#"> Comment</a>
@@ -173,34 +180,53 @@
                         <div class="form-group write-comment">
                             <i class="fa fa-comments-o icon"></i>
                             <input type="text" class="form-control commentbox"
-                                   placeholder="Say something" id="comment-input">
+                                   placeholder="Say something">
+                            <input type="hidden" value="{{ post.id }}">
                         </div>
-
+                     {% for comment in post.comment_set.all %}
                         <div class="comment-show">
-                            <div class="comment-pp">
-                                <img src="image/profile_image.jpg" alt="">
-                            </div>
-                            <div class="comment-txt">
-                                <p class="comment-user-name">
-                                    <a href=""><b>FriendName</b></a>
-                                    <span id="comment-display"></span>
-                                </p>
-                            </div>
-                            <!-- <div class="comment-reply">
-                              <p>12.45 am</p>
-                              <button>Reply</button>
-                            </div> -->
-                        </div>
+                           {% if comment.user.userprofile.profile_pic %}
+                                <div class="comment-pp">
+                                    <img src="{{ comment.user.userprofile.profile_pic.url }}" alt="">
+                                </div>
+                             {% endif %}
+                                <div class="comment-txt">
+                                    <p class="comment-user-name">
+                                        <a href=""><b>{{ comment.user.userprofile.name }}</b></a>
+                                        <span id="comment-display">{{ comment.comment }}</span>
+                                    <div class="time-r-box">
+                                       <span class="commentedon"> at {{ comment.commented_on }}</span>
+                                        <button class="reply-button">Reply</button>
+                                    </div>
+                                    </p>
+                                </div>
+{#                                <div class="reply-form">#}
+{#                                    <form action="#" id="reply-form">#}
+{#                                        <input type="text" name="reply-txt">#}
+{#                                        <input type="hidden" value="{{ post.id }}">#}
+{#                                        <button id="reply-submit-btn">Save</button>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                                {% for reply in comment.reply_set.all %}#}
+{#                                    <div class="reply-show">#}
+{#                                        <div class="reply-pp">#}
+{#                                            {% if reply.user.userprofile.profile_pic %}#}
+{#                                                <img src="{{ reply.user.userprofile.profile_pic.url }}" alt="">#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+{#                                        <div class="reply-txt">#}
+{#                                            <p class="reply-user-name">#}
+{#                                                <a href="">#}
+{#                                                    <b>{{ reply.user.userprofile.name }}</b>#}
+{#                                                </a>#}
+{#                                                <span id="reply-display">{{ reply.reply }}</span>#}
+{#                                            </p>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                {% endfor %}#}
 
-                        <div class="reply-show">
-                            <div class="reply-pp">
-                                <img src="image/profile_image.jpg" alt="">
-                            </div>
-                            <div class="reply-txt">
-                                <p class="reply-user-name"><a href=""><b>FriendName</b></a> It was awesome</p>
-                            </div>
                         </div>
-
+      {% endfor %}
                     </form>
 
                 </div>
@@ -245,80 +271,23 @@
                 <p class="feed">Add To Your Feed</p>
                 <hr>
                 <div class="follower-show-border">
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
+                    {% for profile  in profiles %}
 
                     <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+                               {% if profile.profile_pic %}
+                        <div class="follower-pp"><img src="{{ profile.profile_pic.url }}"></div>
+                               {% endif %}
                         <div class="follower-txt">
-                            <p class="follower-name">FriendName
+                            <p class="follower-name">{{ profile.get_username}}
+                                {% if profile.get_username %}
                                 <button class="fright follow-button">Follow</button>
+                                {% endif %}
                             </p>
                         </div>
                     </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="follower-show">
-                        <div class="follower-pp"><img src="image/fav.png" alt=""></div>
-                        <div class="follower-txt">
-                            <p class="follower-name">FriendName
-                                <button class="fright follow-button">Follow</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+
+
             </div>
 
             <div class="chat">

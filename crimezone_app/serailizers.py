@@ -16,7 +16,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('username', 'first_name', 'last_name',)
+        fields = ('username', 'first_name', 'last_name')
 
     def is_valid(self, raise_exception=True):
         if self.initial_data.get('password') != self.initial_data.get('confirm_password'):
@@ -57,7 +57,7 @@ class UserLoginSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = "__all__"
+        fields = ('id', 'user', 'name', 'role', 'profile_pic', 'joining_time')
 
     ''' CrimePost Seralizer'''
 
@@ -68,17 +68,26 @@ class CrimePostSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class UserSerializer(serializers.ModelSerializer):
+    userprofile = UserProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ('id', 'userprofile',)
+
+
 class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = '__all__'
         read_only_fields = ('user',)
 
-    def save(self, **kwargs):
-        return super(CommentSerializer, self).save(**kwargs)
-
 
 class ReplySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Reply
         fields = '__all__'
@@ -86,7 +95,23 @@ class ReplySerializer(serializers.ModelSerializer):
 
 
 class LikeSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    total_likes = serializers.SerializerMethodField(read_only=True)
+    i_liked = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Like
-        fields = '__all__'
+        fields = ('post', 'user', 'total_likes', 'i_liked')
         read_only_fields = ('user',)
+
+    def get_total_likes(self, obj):
+        try:
+            return obj.post.like_set.count()
+        except:
+            return 0
+
+    def get_i_liked(self, obj):
+        try:
+            return obj.post.is_liked_by_me
+        except:
+            return False

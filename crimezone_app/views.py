@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -43,9 +44,16 @@ def index(request):
 def postview(request):
     data = request.user.userprofile
     posts = CrimePost.objects.filter(user_profile=request.user.userprofile).order_by('-posted_on')
+    current_loggedin_user = request.user
+    followings = current_loggedin_user.userprofile.following.all().values_list('pk', flat=True)
+    profiles = UserProfile.objects.filter(
+        ~Q(following__pk__in=followings) & ~Q(user_id=current_loggedin_user.pk)
+    )
+
     context = {
         "data": data,
         "posts": posts,
+        'profiles': profiles
     }
     return render(request, 'index.html', context)
 
@@ -244,6 +252,13 @@ class LikeApiView(APIView):
     def post(self, request, *args, **kwargs):
         _serializer = LikeSerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
-            _serializer.save(user=request.user)
-            return Response(data=_serializer.data)
+            try:
+                _serializer.save(user=request.user)
+                return Response(data=_serializer.data)
+            except IntegrityError:
+                _post = request.data.get('post')
+                _likes = Like.objects.filter(post_id=_post, user=request.user).delete()
+                return Response(data=_serializer.data)
+            except Exception:
+                return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})

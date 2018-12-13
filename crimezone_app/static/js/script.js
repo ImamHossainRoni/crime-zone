@@ -2,7 +2,6 @@
     $(document).ready(function () {
         // User login 
         $("#login-btn").on('click', function () {
-            // console.log("Submit")
 
             $.ajax({
                 url: '/api/login/',
@@ -52,7 +51,6 @@
                 })
 
             }).then(function (res) {
-                // console.log(res);
             });
             //location.reload();
         });
@@ -68,7 +66,6 @@
 
 
             }).then(function (res) {
-                console.log("done");
                 window.location.href = '/'
             });
 
@@ -89,7 +86,6 @@
         }
 
         document.getElementById('postimage').addEventListener('change', readFile);
-        console.log(uploadImageString);
 
         // insert post
         $("#post").on('click', function () {
@@ -107,8 +103,6 @@
                 })
 
             }).then(function (res) {
-                // console.log(res);
-                console.log("Done");
                 location.reload();
             });
         });
@@ -125,10 +119,74 @@
         });
 
         // Comment Part
-        $("#comment-form").on('submit', function (e) {
+        $(document).on('submit', '#comment-form', function (e) {
             e.preventDefault();
-            var commentText = $('#comment-input').val();
+            var commentText = e.target.elements[0].value;
+            var commentPostId = e.target.elements[1].value;
+            $.ajax({
+                url: '/api/comment/',
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": localStorage.getItem('csrf_token'),
+                    "Content-Type": 'application/json'
+                },
+                processData: false,
+                data: JSON.stringify({
+                    comment: commentText,
+                    post: commentPostId
+                })
+
+            }).then(function (res) {
+                location.reload();
+            });
         });
+
+        // Reply Part
+        $(document).on('click', '#reply-submit-btn', function (e) {
+            e.preventDefault();
+            var replyText = $("#reply-form").target.elements[0].value;
+            var commentId = $("#reply-form").target.elements[1].value;
+            $.ajax({
+                url: '/api/reply/',
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": localStorage.getItem('csrf_token'),
+                    "Content-Type": 'application/json'
+                },
+                processData: false,
+                data: JSON.stringify({
+                    reply: replyText,
+                    comment: commentId
+                })
+
+            }).then(function (res) {
+                console.log(res)
+                // location.reload();
+            });
+        });
+
+        // Like part
+        $(document).on("click", ".likebutton", function () {
+            $.ajax({
+                url: '/api/like/',
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": localStorage.getItem('csrf_token'),
+                    "Content-Type": 'application/json'
+                },
+                processData: false,
+                data: JSON.stringify({
+                    post: $(this).data('post')
+                })
+
+            }).then(function (res) {
+                $('#like-count-' + res.post).html('(' + res.total_likes + ')');
+                if (res.i_liked) {
+                    $(".like-unlike-btn-text-" + res.post).html('Unstar')
+                } else {
+                    $(".like-unlike-btn-text-" + res.post).html('Star')}
+            });
+        })
 
     })
 })(jQuery);
