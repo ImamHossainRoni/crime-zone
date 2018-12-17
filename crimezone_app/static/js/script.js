@@ -142,10 +142,10 @@
         });
 
         // Reply Part
-        $(document).on('click', '#reply-submit-btn', function (e) {
+        $(document).on('click', '.reply-submit-btn', function (e) {
             e.preventDefault();
-            var replyText = $("#reply-form").target.elements[0].value;
-            var commentId = $("#reply-form").target.elements[1].value;
+            var replyText = e.target.parentElement.children[0].value;
+            var commentId = e.target.parentElement.children[1].value;
             $.ajax({
                 url: '/api/reply/',
                 method: 'POST',
@@ -160,8 +160,7 @@
                 })
 
             }).then(function (res) {
-                console.log(res)
-                // location.reload();
+                location.reload();
             });
         });
 

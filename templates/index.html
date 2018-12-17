@@ -196,34 +196,36 @@
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
                                        <span class="commentedon"> at {{ comment.commented_on }}</span>
-                                        <button class="reply-button">Reply</button>
+                                        <button class="reply-button" type="button">Reply</button>
                                     </div>
                                     </p>
                                 </div>
-{#                                <div class="reply-form">#}
-{#                                    <form action="#" id="reply-form">#}
-{#                                        <input type="text" name="reply-txt">#}
-{#                                        <input type="hidden" value="{{ post.id }}">#}
-{#                                        <button id="reply-submit-btn">Save</button>#}
-{#                                    </form>#}
-{#                                </div>#}
-{#                                {% for reply in comment.reply_set.all %}#}
-{#                                    <div class="reply-show">#}
-{#                                        <div class="reply-pp">#}
-{#                                            {% if reply.user.userprofile.profile_pic %}#}
-{#                                                <img src="{{ reply.user.userprofile.profile_pic.url }}" alt="">#}
-{#                                            {% endif %}#}
-{#                                        </div>#}
-{#                                        <div class="reply-txt">#}
-{#                                            <p class="reply-user-name">#}
-{#                                                <a href="">#}
-{#                                                    <b>{{ reply.user.userprofile.name }}</b>#}
-{#                                                </a>#}
-{#                                                <span id="reply-display">{{ reply.reply }}</span>#}
-{#                                            </p>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                {% endfor %}#}
+                                <div class="reply-form">
+                                    <input type="text" name="reply-txt">
+                                    <input type="hidden" value="{{ comment.id }}">
+                                    <button data-post="{{ post.id }}" data-comment="{{ comment.id }}"
+                                            class="reply-submit-btn" type="button">
+                                        Save
+                                    </button>
+                                </div>
+                                {% for reply in comment.reply_set.all %}
+                                    <div class="reply-show">
+                                        <div class="reply-pp">
+                                            {% if reply.user.userprofile.profile_pic %}
+                                                <img src="{{ reply.user.userprofile.profile_pic.url }}" alt="">
+                                            {% endif %}
+                                        </div>
+                                        <div class="reply-txt">
+                                            <p class="reply-user-name">
+                                                <a href="">
+                                                    <b>{{ reply.user.userprofile.name }}</b>
+                                                </a>
+                                                <span id="reply-display">{{ reply.reply }}</span>
+                                                {{ reply.replied_on }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
 
                         </div>
       {% endfor %}

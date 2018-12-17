@@ -3,27 +3,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
-# Create your models here.
-class Role(models.Model):
-    COMMONUSER = 1
-    ACTIONAPPLYER = 2
-    ADMIN = 3
-    ROLE_CHOICES = (
-        (COMMONUSER, 'common_user'),
-        (ACTIONAPPLYER, 'action_applyer'),
-        (ADMIN, 'admin'),
-    )
-
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
+ROLE_CHOICES = (
+    (1, 'Common User'),
+    (2, 'Action Applier'),
+)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
+    role = models.IntegerField(choices=ROLE_CHOICES, null=True)
     followers = models.ManyToManyField('UserProfile',
                                        related_name='followers_profile',
                                        blank=True)
