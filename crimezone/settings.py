@@ -128,3 +128,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+# EMAIL SETTINGS
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.imamhossainroni.me'
+EMAIL_PORT = 26
+EMAIL_HOST_USER = 'crimezone@imamhossainroni.me'
+EMAIL_HOST_PASSWORD = 'Z[,tP{GlGzRf'

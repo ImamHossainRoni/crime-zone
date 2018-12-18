@@ -1,24 +1,16 @@
+from django.contrib.auth import authenticate, login
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.http import Http404
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.authentication import SessionAuthentication
-
-from crimezone_app.models import Comment
-from crimezone_app.serailizers import CommentSerializer
-from .serailizers import *
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import generics, status
-from django.shortcuts import render, HttpResponse, redirect
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
-from .models import *
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from rest_framework.views import APIView
+
+from .serailizers import *
 
 '''login page view'''
 
@@ -56,6 +48,17 @@ def postview(request):
         'profiles': profiles
     }
     return render(request, 'index.html', context)
+
+
+def action_post_view(request):
+    comment = Comment.objects
+    context = {
+        'posts': CrimePost.objects.annotate(
+            comment_count=Count('comment'), like_count=Count('like')
+        ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
+        'common_users': UserProfile.objects.filter(role=1)
+    }
+    return render(request, 'test.html', context)
 
 
 ''' post in home view'''
@@ -97,7 +100,7 @@ class LoginApiView(APIView):
             )
             if _user is not None:
                 login(request, _user)
-                return Response(data={'success': True})
+                return Response(data={'success': True, 'success_url': _user.userprofile.get_success_url})
         return Response(data={'success': False})
 
 
@@ -262,3 +265,13 @@ class LikeApiView(APIView):
             except Exception:
                 return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})
+
+
+class UserActiveDeactiveView(APIView):
+    def post(self, request, *args, **kwargs):
+        user = request.data['user']
+        user = UserProfile.objects.get(pk=user)
+        dj_user = user.user
+        dj_user.is_active = not dj_user.is_active
+        dj_user.save()
+        return Response(data={'success': True, 'is_active': dj_user.is_active})

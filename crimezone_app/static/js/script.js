@@ -19,7 +19,7 @@
 
             }).then(function (res) {
                 if (res.success) {
-                    window.location.href = '/post'
+                    window.location.href = res.success_url
 
                 } else {
                     window.alert("Username or Password not matched !")
@@ -183,7 +183,30 @@
                 if (res.i_liked) {
                     $(".like-unlike-btn-text-" + res.post).html('Unstar')
                 } else {
-                    $(".like-unlike-btn-text-" + res.post).html('Star')}
+                    $(".like-unlike-btn-text-" + res.post).html('Star')
+                }
+            });
+        });
+
+        // User deactivate
+        $(document).on('click', '.deactive-btn', function (e) {
+            var user = this.dataset['user']
+            var status = this.dataset['status']
+            var vm = this;
+            $.ajax({
+                url: '/api/active-deactive/',
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": localStorage.getItem('csrf_token'),
+                    "Content-Type": 'application/json'
+                },
+                processData: false,
+                data: JSON.stringify({
+                    user: user
+                })
+
+            }).then(function (res) {
+                $(vm).html(res.is_active === false ? 'Active' : 'Deactive')
             });
         })
 

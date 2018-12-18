@@ -1,8 +1,21 @@
-<html>
-    <head><title>test</title></head>
-    <body>
-{% for i in profiles %}
-<h1>{{i.user.username}}</h1>
-{% endfor %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ posts }}
+
+    <div>
+        {% for user  in common_users %}
+            <p>
+                {{ user.name }}
+                <a href="#"
+                   data-user="{{ user.pk }}" class="deactive-btn">
+                    {% if user.user.is_active %}
+                    Deactive
+                    {% else %}
+                    Active
+                    {% endif %}
+                </a>
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

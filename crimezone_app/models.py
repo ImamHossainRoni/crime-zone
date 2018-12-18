@@ -45,6 +45,12 @@ class UserProfile(models.Model):
         else:
             return 0
 
+    @property
+    def get_success_url(self):
+        if self.role == ROLE_CHOICES[0][0]:
+            return '/post/'
+        return '/action-posts/'
+
     def __str__(self):
         return self.get_username
 
