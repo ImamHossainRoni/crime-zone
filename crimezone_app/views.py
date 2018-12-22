@@ -10,6 +10,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from crimezone_app.helpers import send_email_to_users
 from .serailizers import *
 
 def pageloder(request):
@@ -58,7 +59,7 @@ def postview(request):
 
 
 def action_post_view(request):
-    data = userprofile.objects.all()
+    data = UserProfile.objects.all()
     comment = Comment.objects
     context = {
         "data": data,
@@ -293,4 +294,5 @@ class UserActiveDeactiveView(APIView):
         dj_user = user.user
         dj_user.is_active = not dj_user.is_active
         dj_user.save()
+        send_email_to_users(emails=[dj_user.username], body='Test', subject='YES')
         return Response(data={'success': True, 'is_active': dj_user.is_active})
