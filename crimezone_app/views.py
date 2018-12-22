@@ -294,5 +294,12 @@ class UserActiveDeactiveView(APIView):
         dj_user = user.user
         dj_user.is_active = not dj_user.is_active
         dj_user.save()
-        send_email_to_users(emails=[dj_user.username], body='Test', subject='YES')
+        #send_email_to_users(emails=[dj_user.username], body='Test', subject='YES')
+
+        active_msg = 'Now you are permitted to access your account.'
+        deactive_msg = 'Now you are not permitted to access your account.'
+        if dj_user.is_active:
+            send_email_to_users(emails=[dj_user.username], body=active_msg, subject='CrimeZone Access Control')
+        else:
+            send_email_to_users(emails=[dj_user.username], body=deactive_msg, subject='CrimeZone Access Control')
         return Response(data={'success': True, 'is_active': dj_user.is_active})
