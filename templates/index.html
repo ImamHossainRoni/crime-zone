@@ -10,7 +10,8 @@
                         <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
 
                     {% else %}
-                        <img src="{% static  'image/fav.png' %}">
+
+                        <a href="/post"><img src="{% static  'image/fav.png' %}"></a>
                     {% endif %}
                 </div>
                 <div class="user-pp" id="user-profile">
@@ -99,8 +100,12 @@
         {% for post in posts %}
             <div class="card">
                 <div class="card-header">
+                    {% if data.profile_pic %}
 
-                    <div class="col-2 profile_picture"><img src="{{ data.profile_pic.url }}" alt="nopp"></div>
+                        <div class="col-2 profile_picture"><img src="{{ data.profile_pic.url }}" alt="nopp"></div>
+                    {% else %}
+                        <div class="col-2 profile_picture"><img src="{% static  'image/fav.png' %}"></div>
+                    {% endif %}
                     <div class="col-10 friend_name">
                         <div class="friend_name_description">
                             <div class="idno">
@@ -147,10 +152,18 @@
                     <p>
                         {% if post.title|length|get_digit:"-1" > 100 %}
                             {{ post.title|truncatechars:100 }}
-                            <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
-                               data-photo="{{ post.images.url }}" data-status="{{ post.title }}">
-                                Read More
-                            </a>
+                            {% if post.images %}
+                                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
+                                   data-photo="{{ post.images.url }}" data-status="{{ post.title }}">
+                                    Read More
+                                </a>
+                            {% else %}
+
+                                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
+                                   data-status="{{ post.title }}">
+                                    Read More
+                                </a>
+                            {% endif %}
                         {% else %}
                             {{ post.title }}
                         {% endif %}
@@ -183,19 +196,19 @@
                                    placeholder="Say something">
                             <input type="hidden" value="{{ post.id }}">
                         </div>
-                     {% for comment in post.comment_set.all %}
-                        <div class="comment-show">
-                           {% if comment.user.userprofile.profile_pic %}
-                                <div class="comment-pp">
-                                    <img src="{{ comment.user.userprofile.profile_pic.url }}" alt="">
-                                </div>
-                             {% endif %}
+                        {% for comment in post.comment_set.all %}
+                            <div class="comment-show">
+                                {% if comment.user.userprofile.profile_pic %}
+                                    <div class="comment-pp">
+                                        <img src="{{ comment.user.userprofile.profile_pic.url }}" alt="">
+                                    </div>
+                                {% endif %}
                                 <div class="comment-txt">
                                     <p class="comment-user-name">
                                         <a href=""><b>{{ comment.user.userprofile.name }}</b></a>
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
-                                       <span class="commentedon"> at {{ comment.commented_on }}</span>
+                                        <span class="commentedon"> at {{ comment.commented_on }}</span>
                                         <button class="reply-button" type="button">Reply</button>
                                     </div>
                                     </p>
@@ -227,8 +240,8 @@
                                     </div>
                                 {% endfor %}
 
-                        </div>
-      {% endfor %}
+                            </div>
+                        {% endfor %}
                     </form>
 
                 </div>
@@ -268,26 +281,26 @@
 
 
     <div class="col-md-3 right_sidebar ">
-        <div class="total-rr ">
-            <div class="first-rr">
-                <p class="feed">Add To Your Feed</p>
-                <hr>
-                <div class="follower-show-border">
-                    {% for profile  in profiles %}
+    <div class="total-rr ">
+        <div class="first-rr">
+            <p class="feed">Add To Your Feed</p>
+            <hr>
+            <div class="follower-show-border">
+                {% for profile  in profiles %}
 
                     <div class="follower-show">
-                               {% if profile.profile_pic %}
-                        <div class="follower-pp"><img src="{{ profile.profile_pic.url }}"></div>
-                               {% endif %}
+                        {% if profile.profile_pic %}
+                            <div class="follower-pp"><img src="{{ profile.profile_pic.url }}"></div>
+                        {% endif %}
                         <div class="follower-txt">
-                            <p class="follower-name">{{ profile.get_username}}
+                            <p class="follower-name">{{ profile.get_username }}
                                 {% if profile.get_username %}
-                                <button class="fright follow-button">Follow</button>
+                                    <button class="fright follow-button">Follow</button>
                                 {% endif %}
                             </p>
                         </div>
                     </div>
-                    {% endfor %}
+                {% endfor %}
 
 
             </div>

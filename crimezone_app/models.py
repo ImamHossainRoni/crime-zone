@@ -10,7 +10,7 @@ ROLE_CHOICES = (
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.IntegerField(choices=ROLE_CHOICES, null=True)
+    role = models.IntegerField(choices=ROLE_CHOICES, null=True, default=1)
     followers = models.ManyToManyField('UserProfile',
                                        related_name='followers_profile',
                                        blank=True)
@@ -58,7 +58,7 @@ class UserProfile(models.Model):
 class CrimePost(models.Model):
     user_profile = models.ForeignKey(UserProfile,
                                      on_delete=models.PROTECT, null=True, blank=True)
-    title = models.TextField()
+    title = models.TextField( null=True,blank=True)
     images = models.ImageField(upload_to='post_images', null=True, blank=True)
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
 

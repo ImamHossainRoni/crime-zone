@@ -12,9 +12,16 @@ from rest_framework.views import APIView
 
 from .serailizers import *
 
+def pageloder(request):
+    comment = Comment.objects
+    context = {
+        'posts': CrimePost.objects.annotate(
+            comment_count=Count('comment'), like_count=Count('like')
+        ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
+        'common_users': UserProfile.objects.filter(role=1)
+    }
+    return render(request, 'action.html', context)
 '''login page view'''
-
-
 @csrf_exempt
 def index(request):
     return render(request, 'login.html')
@@ -51,14 +58,16 @@ def postview(request):
 
 
 def action_post_view(request):
+    data = userprofile.objects.all()
     comment = Comment.objects
     context = {
+        "data": data,
         'posts': CrimePost.objects.annotate(
             comment_count=Count('comment'), like_count=Count('like')
         ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
         'common_users': UserProfile.objects.filter(role=1)
     }
-    return render(request, 'test.html', context)
+    return render(request, 'action.html', context)
 
 
 ''' post in home view'''
@@ -67,9 +76,16 @@ def action_post_view(request):
 def post_In_home(request):
     data = request.user.userprofile
     common_post = CrimePost.objects.all().order_by('-posted_on')
+    current_loggedin_user = request.user
+    followings = current_loggedin_user.userprofile.following.all().values_list('pk', flat=True)
+    profiles = UserProfile.objects.filter(
+        ~Q(following__pk__in=followings) & ~Q(user_id=current_loggedin_user.pk)
+    )
+
     context = {
         "data": data,
-        "common_post": common_post
+        "common_post": common_post,
+         'profiles': profiles
     }
     return render(request, 'home.html', context)
 
@@ -180,13 +196,16 @@ class CrimePostApiView(APIView):
             raise Http404
 
     def post(self, request, *args, **kwargs):
+        try:
+            format, imgstr = request.data['images'].split(';base64,')
+            ext = format.split('/')[-1]
 
-        format, imgstr = request.data['images'].split(';base64,')
-        ext = format.split('/')[-1]
-
-        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-        _requested_data = request.data
-        _requested_data['images'] = data
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            _requested_data = request.data
+            _requested_data['images'] = data
+        except Exception as exp:
+            _requested_data = request.data
+            _requested_data.pop('images', None)
 
         serializer = CrimePostSerializer(data=_requested_data)
         if serializer.is_valid():

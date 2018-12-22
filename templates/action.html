@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block profile %}
+    <div class="col-md-3 left_sidebar">
+        <div class="total-pp" id="user-profile">
+            <div class="user-profile-background">
+                <div class="user-profile-pp">
+                    {% if data.user.profile_pic %}
+                        <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
+
+                    {% else %}
+                        <img src="{% static  'image/fav.png' %}">
+                    {% endif %}
+                </div>
+                <div class="user-pp" id="user-profile">
+
+
+                    <h5 class="name">{{ data.name }} </h5>
+                    <p class="email">{{ data.user.username }}</p>
+                    <p class="fa fa-map-marker loc"> Dhaka</p>
+                    <p class="fa fa-clock-o datetime"> {{ data.joining_time }}</p>
+
+                </div>
+                <div class="option">
+                    <p><a class="fa fa-th menu userdetails" href="#" data-toggle="modal" data-target="#userdetails"
+                          data-backdrop="static" data-keyboard="false"></a></p>
+
+                </div>
+
+                <div class="border"></div>
+                <div class="other">
+                    <p><a href="">Who's viewed your profile</a> 100</p>
+                    <p><a href="">Views of your post</a> 45</p>
+                </div>
+            </div>
+
+        </div>
+        <!-- details -->
+
+        <div class="modal animate" id="userdetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Profile Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="userinfotable">
+                            <table class="table">
+                                <tr>
+                                    <th>First Name:</th>
+                                    <td>{{ data.user.first_name }} </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Last Name:</th>
+                                    <td>{{ data.user.last_name }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ data.user.username }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Password</th>
+                                    <td>******</td>
+                                    <td>
+                                        <button class="btn btn-secondary">Change</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td><p class="fa fa-map-marker loc"></p> Uttara</td>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-6 main_content">
+
+  <div class="userprofile">
+    <h5 class="userprofiletitle">Take Action</h5>
+    <div class="userinfotable">
+     <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#SN</th>
+          <th scope="col">User</th>
+          <th scope="col">Email</th>
+          <th scope="col">Permission</th>
+        </tr>
+      </thead>
+      <tbody>
+         
+            {% for user  in common_users %}
+        <tr>
+          <th scope="row"></th>
+          <td> {{ user.name }}</td>
+          <td>{{  user.user.username}}</td>
+          <td>  <a href="#"
+            data-user="{{ user.pk }}" class="deactive-btn">
+             {% if user.user.is_active %}
+             Deactive
+             {% else %}
+             Active
+             {% endif %}
+         </a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+
+{% block feed %}
+    <!-- details post -->
+
+    <div class="col-md-3 right_sidebar ">
+      <div class="total-rr ">
+        <div class="first-rr">
+          <p class="feed">Add To Your Feed</p>
+          <hr>
+          <div class="follower-show-border">
+            <div class="follower-show">
+              <div class="follower-pp"><img src="image/fav.png" alt=""></div>
+              <div class="follower-txt">
+                <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+
+{% endblock %}

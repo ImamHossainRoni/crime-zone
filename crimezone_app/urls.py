@@ -18,5 +18,5 @@ urlpatterns = [
     path('api/reply/', ReplyApiView.as_view()),
     path('api/like/', LikeApiView.as_view()),
     path('api/active-deactive/', UserActiveDeactiveView.as_view()),
-
+    path('load/',views.pageloder,name="load")
 ]
