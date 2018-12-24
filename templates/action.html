@@ -126,7 +126,7 @@
 
           <td>  <a href="#"
             data-user="{{ post.user_profile.pk }}" class=" deactive-btn">
-             {% if post.user_profile.is_active %}
+             {% if post.user_profile.user.is_active %}
                  Deactive
              {% else %}
              Active

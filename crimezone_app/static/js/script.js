@@ -39,7 +39,7 @@
 // var pass2 = $("input[name = 'password2']").val()
 
 // User registration
-        $("#signupbutton").on('click', function () {
+        $("#signupbutton").on('submit', function () {
             $.ajax({
                 url: '/api/create-user/',
                 method: 'POST',

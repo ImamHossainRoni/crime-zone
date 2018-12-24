@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
@@ -51,11 +53,18 @@ def postview(request):
     profiles = UserProfile.objects.filter(
         ~Q(following__pk__in=followings) & ~Q(user_id=current_loggedin_user.pk)
     )
+    post_of_the_day = CrimePost.objects.filter(
 
+        posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
+        posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('like_count').first()
+
+    top_5_post = CrimePost.objects.filter()
     context = {
         "data": data,
         "posts": posts,
-        'profiles': profiles
+        'profiles': profiles,
+        'post_of_the_day': post_of_the_day
     }
     return render(request, 'index.html', context)
 
