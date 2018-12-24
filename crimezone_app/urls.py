@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/post/', CrimePostApiView.as_view()),
     path('post/', views.postview, name="post-view"),
     path('action-posts/', views.action_post_view, name="post-view"),
+    path('users/<int:id>', views.userpost, name="user-view"),
     path('commonpost/', views.post_In_home, name="post-in-home-view"),
     path('test/', views.add_feed, name="following_user"),
     path('report/', views.report_view, name="report"),

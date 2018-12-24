@@ -125,8 +125,7 @@
         });
 
         // Comment Part
-        $(document).on('submit', '#comment-form', function (e) {
-            console.log("jdsfja");
+        $(document).on('submit', '.comment-form', function (e) {
             e.preventDefault();
             var commentText = e.target.elements[0].value;
             var commentPostId = e.target.elements[1].value;

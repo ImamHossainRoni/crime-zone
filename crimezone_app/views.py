@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.db.models import Q, Count
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
@@ -60,6 +60,18 @@ def postview(request):
     return render(request, 'index.html', context)
 
 
+# user post
+def userpost(request, id):
+    _user = get_object_or_404(UserProfile, pk=id)
+    posts = CrimePost.objects.filter(user_profile=_user).order_by('-posted_on')
+
+    context = {
+        "data": _user,
+        "posts": posts
+    }
+    return render(request, 'userpost.html', context)
+
+
 def action_post_view(request):
     data = request.user.userprofile
     comment = Comment.objects
@@ -113,11 +125,12 @@ def report_view(request):
         total_commented_users=Count('comment__user_id', distinct=True),
         total_replied_users=Count('comment__reply__user_id', distinct=True),
         total_liked_users=Count('like__user_id', distinct=True),
-        
+
     )
     total_system_users = UserProfile.objects.count()
-       
-    return render(request, 'report.html', {'data': queryset, 'total_users': total_system_users,'userinfo':userinfo})
+
+    return render(request, 'report.html', {'data': queryset, 'total_users': total_system_users, 'userinfo': userinfo})
+
 
 def crime_view(request):
     data = request.user.userprofile
@@ -129,7 +142,7 @@ def crime_view(request):
         ).filter(Q(comment_count__gt=1) | Q(like_count__gt=1)),
         'common_users': UserProfile.objects.filter(role=1)
     }
-    return render(request,'crime.html',context)
+    return render(request, 'crime.html', context)
 
 
 '''Login api view'''

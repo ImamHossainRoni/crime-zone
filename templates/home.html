@@ -113,7 +113,7 @@
                                 <p class="pp"></p>
                             </div>
 
-                            <a href="#">{{ post.user_profile }}</a><i class="fa fa-globe"></i>
+                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i class="fa fa-globe"></i>
                             <br>
                             <p class="fa fa-clock-o"> {{ post.posted_on }}</p>
                             <p class="fa fa-map-marker location"> at Uttara</p>
@@ -175,7 +175,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <form id="comment-form" action="#">
+                    <form class="comment-form" action="#">
                         <div class="col-4 like">
                             <a class="fa fa-star-o likebutton" data-post="{{ post.id }}">
                                 {% if post.is_liked_by_me %}
@@ -198,6 +198,7 @@
                             <input type="text" class="form-control commentbox"
                                    placeholder="Say something">
                             <input type="hidden" value="{{ post.id }}">
+                            <button type="submit">Comment</button>
                         </div>
                      {% for comment in post.comment_set.all %}
                         <div class="comment-show">
@@ -208,7 +209,7 @@
                              {% endif %}
                                 <div class="comment-txt">
                                     <p class="comment-user-name">
-                                        <a href=""><b>{{ comment.user.userprofile.name }}</b></a>
+                                        <a href="/users/{{ post.user_profile_id }}"><b>{{ comment.user.userprofile.name }}</b></a>
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
                                        <span class="commentedon"> at {{ comment.commented_on }}</span>
@@ -233,7 +234,7 @@
                                         </div>
                                         <div class="reply-txt">
                                             <p class="reply-user-name">
-                                                <a href="">
+                                                <a href="/users/{{ post.user_profile_id }}">
                                                     <b>{{ reply.user.userprofile.name }}</b>
                                                 </a>
                                                 <span id="reply-display">{{ reply.reply }}</span>
