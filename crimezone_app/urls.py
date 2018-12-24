@@ -14,9 +14,12 @@ urlpatterns = [
     path('action-posts/', views.action_post_view, name="post-view"),
     path('commonpost/', views.post_In_home, name="post-in-home-view"),
     path('test/', views.add_feed, name="following_user"),
+    path('report/', views.report_view, name="report"),
+    path('crime/', views.crime_view, name="crime"),
     path('api/comment/', CommentApiView.as_view()),
     path('api/reply/', ReplyApiView.as_view()),
     path('api/like/', LikeApiView.as_view()),
     path('api/active-deactive/', UserActiveDeactiveView.as_view()),
-    path('load/',views.pageloder,name="load")
+    path('api/search/', SearchAPiView.as_view()),
+    # path('load/',views.pageloder,name="load")
 ]

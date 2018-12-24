@@ -13,16 +13,18 @@ from rest_framework.views import APIView
 from crimezone_app.helpers import send_email_to_users
 from .serailizers import *
 
-def pageloder(request):
-    comment = Comment.objects
-    context = {
-        'posts': CrimePost.objects.annotate(
-            comment_count=Count('comment'), like_count=Count('like')
-        ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
-        'common_users': UserProfile.objects.filter(role=1)
-    }
-    return render(request, 'action.html', context)
+# def pageloder(request):
+#     comment = Comment.objects
+#     context = {
+#         'posts': CrimePost.objects.annotate(
+#             comment_count=Count('comment'), like_count=Count('like')
+#         ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
+#         'common_users': UserProfile.objects.filter(role=1)
+#     }
+#     return render(request, 'action.html', context)
 '''login page view'''
+
+
 @csrf_exempt
 def index(request):
     return render(request, 'login.html')
@@ -59,13 +61,13 @@ def postview(request):
 
 
 def action_post_view(request):
-    data = UserProfile.objects.all()
+    data = request.user.userprofile
     comment = Comment.objects
     context = {
         "data": data,
         'posts': CrimePost.objects.annotate(
             comment_count=Count('comment'), like_count=Count('like')
-        ).filter(Q(comment_count__gt=4) | Q(like_count__gt=4)),
+        ).filter(Q(comment_count__gt=1) | Q(like_count__gt=1)),
         'common_users': UserProfile.objects.filter(role=1)
     }
     return render(request, 'action.html', context)
@@ -86,7 +88,7 @@ def post_In_home(request):
     context = {
         "data": data,
         "common_post": common_post,
-         'profiles': profiles
+        'profiles': profiles
     }
     return render(request, 'home.html', context)
 
@@ -102,6 +104,32 @@ def add_feed(request):
         'profiles': profiles
     }
     return render(request, 'test.html', context)
+
+
+def report_view(request):
+    userinfo = request.user.userprofile
+    queryset = CrimePost.objects.aggregate(
+        total_active_users=Count('user_profile_id', distinct=True),
+        total_commented_users=Count('comment__user_id', distinct=True),
+        total_replied_users=Count('comment__reply__user_id', distinct=True),
+        total_liked_users=Count('like__user_id', distinct=True),
+        
+    )
+    total_system_users = UserProfile.objects.count()
+       
+    return render(request, 'report.html', {'data': queryset, 'total_users': total_system_users,'userinfo':userinfo})
+
+def crime_view(request):
+    data = request.user.userprofile
+    comment = Comment.objects
+    context = {
+        "data": data,
+        'posts': CrimePost.objects.annotate(
+            comment_count=Count('comment'), like_count=Count('like')
+        ).filter(Q(comment_count__gt=1) | Q(like_count__gt=1)),
+        'common_users': UserProfile.objects.filter(role=1)
+    }
+    return render(request,'crime.html',context)
 
 
 '''Login api view'''
@@ -276,13 +304,17 @@ class LikeApiView(APIView):
         _serializer = LikeSerializer(data=request.data)
         if _serializer.is_valid(raise_exception=True):
             try:
-                _serializer.save(user=request.user)
-                return Response(data=_serializer.data)
+                _like = _serializer.save(user=request.user)
+                _data = dict(_serializer.data)
+                _data.update({'total_likes': _like.post.total_likes})
+                return Response(data=_data)
             except IntegrityError:
                 _post = request.data.get('post')
                 _likes = Like.objects.filter(post_id=_post, user=request.user).delete()
-                return Response(data=_serializer.data)
-            except Exception:
+                _data = dict(_serializer.data)
+                _data.update({'total_likes': CrimePost.objects.get(pk=_post).total_likes})
+                return Response(data=_data)
+            except Exception as exp:
                 return Response(data=_serializer.data)
         return Response(data={'message': 'An error occured.'})
 
@@ -294,7 +326,7 @@ class UserActiveDeactiveView(APIView):
         dj_user = user.user
         dj_user.is_active = not dj_user.is_active
         dj_user.save()
-        #send_email_to_users(emails=[dj_user.username], body='Test', subject='YES')
+        # send_email_to_users(emails=[dj_user.username], body='Test', subject='YES')
 
         active_msg = 'Now you are permitted to access your account.'
         deactive_msg = 'Now you are not permitted to access your account.'
@@ -303,3 +335,19 @@ class UserActiveDeactiveView(APIView):
         else:
             send_email_to_users(emails=[dj_user.username], body=deactive_msg, subject='CrimeZone Access Control')
         return Response(data={'success': True, 'is_active': dj_user.is_active})
+
+
+''' SearchAPiView'''
+
+
+class SearchAPiView(APIView):
+    def get_object(self, pk):
+        try:
+            return CrimePost.objects.get(pk=pk)
+        except CrimePost.DoesNotExist:
+            raise Http404
+
+    def get(self, request):
+        cmtlist = CrimePost.objects.all()
+        serialized_cmtlist = CrimePostSearchSerializer(cmtlist, many=True)
+        return Response(serialized_cmtlist.data)

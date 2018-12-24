@@ -83,6 +83,10 @@ class CrimePost(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def total_likes(self):
+        return self.like_set.count()
+
 
 class Comment(models.Model):
     post = models.ForeignKey('CrimePost', on_delete=models.PROTECT)

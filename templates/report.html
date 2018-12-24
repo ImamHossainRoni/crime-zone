@@ -6,8 +6,8 @@
         <div class="total-pp" id="user-profile">
             <div class="user-profile-background">
                 <div class="user-profile-pp">
-                    {% if data.user.profile_pic %}
-                        <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
+                    {% if userinfo.user.profile_pic %}
+                        <a href="/post"> <img src="{{ userinfo.profile_pic.url }}"></a>
 
                     {% else %}
                         <img src="{% static  'image/fav.png' %}">
@@ -16,10 +16,10 @@
                 <div class="user-pp" id="user-profile">
 
 
-                    <h5 class="name">{{ data.name }} </h5>
-                    <p class="email">{{ data.user.username }}</p>
+                    <h5 class="name">{{ userinfo.name }} </h5>
+                    <p class="email">{{ userinfo.user.username }}</p>
                     <p class="fa fa-map-marker loc"> Dhaka</p>
-                    <p class="fa fa-clock-o datetime"> {{ data.joining_time }}</p>
+                    <p class="fa fa-clock-o datetime"> {{ userinfo.joining_time }}</p>
 
                 </div>
                 <div class="option">
@@ -53,31 +53,20 @@
                             <table class="table">
                                 <tr>
                                     <th>First Name:</th>
-                                    <td>{{ data.user.first_name }} </td>
+                                    <td>{{ userinfo.user.first_name }} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th>Last Name:</th>
-                                    <td>{{ data.user.last_name }}</td>
+                                    <td>{{ userinfo.user.last_name }}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
-                                    <td>{{ data.user.username }}</td>
+                                    <td>{{ userinfo.user.username }}</td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <th>Password</th>
-                                    <td>******</td>
-                                    <td>
-                                        <button class="btn btn-secondary">Change</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Location</th>
-                                    <td><p class="fa fa-map-marker loc"></p> Uttara</td>
-                                    <td></td>
-                                </tr>
+                           
 
                             </table>
                         </div>
@@ -98,45 +87,38 @@
 
 <div class="col-md-6 main_content">
 
-  <div class="userprofile">
-    <h5 class="userprofiletitle">Take Action</h5>
-    <div class="userinfotable">
-     <table class="table">
-      <thead>
-        <tr>
-        <th scope="col">No</th>
-          <th scope="col">User</th>
-            <th scope="col">Issue</th>
-          <th scope="col">Permission</th>
-        </tr>
-      </thead>
-      <tbody>
-        <script>
-            var x=0;
-        </script>
-            {% for post  in posts %}
-            <script>
-                    var x=x+1;
-            </script>
-        <tr>
-           <td> <script> document.write(x);</script></td>
-          <td> {{ post.user_profile.name }}</td>
-          <td>{{   post.title}}</td>
 
-          <td>  <a href="#"
-            data-user="{{ post.user_profile.pk }}" class=" deactive-btn">
-             {% if post.user_profile.is_active %}
-                 Deactive
-             {% else %}
-             Active
-             {% endif %}
-         </a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+        <!-- {{ data }}
+        {{ total_users }} -->
+      
+<br>
+        <div class="square-1">
+             <center> 
+                 <p>Total Active User</p>
+                 <b><p>{{data.total_active_users}}</p></b>
+            </center>
+        </div>
+
+        <div class="square-2">
+        <center> 
+            <p>Total Commented By </p>
+            <p>{{data.total_commented_users}}</p>
+        </center>
+        </div>
+
+        <div class="square-3">
+                <center> 
+                    <p>Total Replied By</p>
+                <p>{{data.total_replied_users}}</p>
+               </center>
+        </div>
+        <div class="square-4">
+                <center> 
+                    <p>Total Starred By</p>
+                <p>{{data.total_liked_users}}</p>
+               </center>
+        </div>
+       
 
 </div>
 {% endblock %}

@@ -96,22 +96,23 @@ class ReplySerializer(serializers.ModelSerializer):
 
 class LikeSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    total_likes = serializers.SerializerMethodField(read_only=True)
+    # total_likes = serializers.SerializerMethodField(read_only=True)
     i_liked = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Like
-        fields = ('post', 'user', 'total_likes', 'i_liked')
+        fields = ('post', 'user', 'i_liked')
         read_only_fields = ('user',)
 
-    def get_total_likes(self, obj):
-        try:
-            return obj.post.like_set.count()
-        except:
-            return 0
 
     def get_i_liked(self, obj):
         try:
             return obj.post.is_liked_by_me
         except:
             return False
+
+class CrimePostSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrimePost
+        fields = '__all__'
+      

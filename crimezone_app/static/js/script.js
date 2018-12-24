@@ -32,6 +32,12 @@
 
 // User login end
 
+// var user_name =  $("input[name = 'email']").val(),
+// var firstname =  $("input[name = 'first_name']").val(),
+// var lastname = $("input[name = 'last_name']").val(),
+// var pass1= $("input[name = 'password1']").val(),
+// var pass2 = $("input[name = 'password2']").val()
+
 // User registration
         $("#signupbutton").on('click', function () {
             $.ajax({
@@ -180,6 +186,7 @@
                 })
 
             }).then(function (res) {
+                console.log(res)
                 $('#like-count-' + res.post).html('(' + res.total_likes + ')');
                 if (res.i_liked) {
                     $(".like-unlike-btn-text-" + res.post).html('Unstar')
