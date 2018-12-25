@@ -198,13 +198,25 @@ button {
 .commentedon{
     font-size: 10px;
     text-align: center;
-    float: left;
+    float: right;
 
+}
+.replied_on{
+      font-size: 10px;
+    text-align: center;
+    float: right;
 }
 .comment-extra {
     margin: 0;
     padding: 0;
 }
+.reply-form input{
+    width: 88%;
+    border-radius: 4px;
+    height: 36px;
+    margin-bottom: 2px;
+}
+
 
 .reply-show {
     display: -ms-flexbox; /* IE10 */
@@ -454,6 +466,7 @@ button {
     height: 25px;
     padding-top: 5px;
     padding-left: 5px;
+
 }
 
 .follower-txt {
@@ -465,6 +478,7 @@ button {
 .follower-name {
     padding-left: 4px;
     margin-top: 3px;
+
 }
 
 .follow-button {
@@ -538,7 +552,24 @@ button {
   
 }
 
+.postoftheday img{
+    height: 100%;
 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.postoftheday_post{
+    text-align: justify;
+}
+
+.posted_on{
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    color: blueviolet;
+}
 /*media query*/
 
 @media (max-width: 700px) {

@@ -30,8 +30,8 @@
 
                 <div class="border"></div>
                 <div class="other">
-                    <p><a href="">Who's viewed your profile</a> 100</p>
-                    <p><a href="">Views of your post</a> 45</p>
+{#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
+{#                    <p><a href="">Views of your post</a> 45</p>#}
                 </div>
             </div>
 
@@ -287,36 +287,45 @@
     <div class="col-md-3 right_sidebar ">
     <div class="total-rr ">
         <div class="first-rr">
-            <p class="feed">Add To Your Feed</p>
+            <p class="feed">Post Of The Day</p>
             <hr>
             <div class="follower-show-border">
-                {% for profile  in profiles %}
+
+
+                <div class="follower-show">
 
                     <div class="follower-show">
-                        {% if profile.profile_pic %}
-                            <div class="follower-pp"><img src="{{ profile.profile_pic.url }}"></div>
-                        {% endif %}
+                        <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
+                                                      alt=""></div>
                         <div class="follower-txt">
-                            <p class="follower-name">{{ profile.get_username }}
-                                {% if profile.get_username %}
-                                    <button class="fright follow-button">Follow</button>
-                                {% endif %}
+
+                            <p class="follower-name">
+                                <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                {{ post_of_the_day.user_profile }}  </a>
+                                <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
                             </p>
+
+
                         </div>
                     </div>
-                {% endfor %}
-
+                </div>
+               <div class="postoftheday">
+               <img src="{{ post_of_the_day.images.url }}" alt="">
+               </div>
+                <p class="postoftheday_post">{{ post_of_the_day }}</p>
 
             </div>
 
             <div class="chat">
                 <center>
                     <a href="chating.html">
-                        <button class=" chatbutton btn btn-info">Start Chating</button>
+                        {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
                     </a>
                 </center>
             </div>
         </div>
 
+    </div>
     </div>
 {% endblock %}

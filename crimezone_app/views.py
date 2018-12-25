@@ -42,6 +42,13 @@ def index(request):
 #     return render(request, 'index.html', context)
 
 
+
+def search(request):
+    value = request.GET.get('query')
+    data = CrimePost.objects.filter(Q(title__icontains=value) | Q(title__icontains=value))
+    return render(request, '', context={'data': data})
+
+
 ''' post view '''
 
 
@@ -59,7 +66,7 @@ def postview(request):
         posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
     ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('like_count').first()
 
-    top_5_post = CrimePost.objects.filter()
+    # top_5_post = CrimePost.objects.filter()
     context = {
         "data": data,
         "posts": posts,
@@ -73,10 +80,16 @@ def postview(request):
 def userpost(request, id):
     _user = get_object_or_404(UserProfile, pk=id)
     posts = CrimePost.objects.filter(user_profile=_user).order_by('-posted_on')
+    post_of_the_day = CrimePost.objects.filter(
+
+        posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
+        posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('like_count').first()
 
     context = {
         "data": _user,
-        "posts": posts
+        "posts": posts,
+        'post_of_the_day': post_of_the_day
     }
     return render(request, 'userpost.html', context)
 

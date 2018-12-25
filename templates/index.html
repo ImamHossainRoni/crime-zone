@@ -31,8 +31,8 @@
 
                 <div class="border"></div>
                 <div class="other">
-                    <p><a href="">Who's viewed your profile</a> 100</p>
-                    <p><a href="">Views of your post</a> 45</p>
+{#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
+{#                    <p><a href="">Views of your post</a> 45</p>#}
                 </div>
             </div>
 
@@ -195,7 +195,7 @@
                             <input type="text" class="form-control commentbox"
                                    placeholder="Say something">
                             <input type="hidden" value="{{ post.id }}">
-                            <button type="submit">Comment</button>
+                            <button type="submit" class="c_btn">Comment</button>
                         </div>
                         {% for comment in post.comment_set.all %}
                             <div class="comment-show">
@@ -210,7 +210,7 @@
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
                                         <span class="commentedon"> at {{ comment.commented_on }}</span>
-                                        <button class="reply-button" type="button">Reply</button>
+{#                                        <button class="reply-button" type="button">Reply</button>#}
                                     </div>
                                     </p>
                                 </div>
@@ -219,7 +219,7 @@
                                     <input type="hidden" value="{{ comment.id }}">
                                     <button data-post="{{ post.id }}" data-comment="{{ comment.id }}"
                                             class="reply-submit-btn" type="button">
-                                        Save
+                                        Reply
                                     </button>
                                 </div>
                                 {% for reply in comment.reply_set.all %}
@@ -235,8 +235,9 @@
                                                     <b>{{ reply.user.userprofile.name }}</b>
                                                 </a>
                                                 <span id="reply-display">{{ reply.reply }}</span>
-                                                {{ reply.replied_on }}
+
                                             </p>
+                                             <span class="replied_on"> at {{ reply.replied_on }}</span>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -306,29 +307,45 @@
     <div class="col-md-3 right_sidebar ">
     <div class="total-rr ">
         <div class="first-rr">
-            <p class="feed">Add To Your Feed</p>
+            <p class="feed">Post Of The Day</p>
             <hr>
             <div class="follower-show-border">
 
 
+                <div class="follower-show">
+
                     <div class="follower-show">
-                        {{ post_of_the_day.user_profile }}<br/>
-                        {{ post_of_the_day }}
+                        <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
+                                                      alt=""></div>
+                        <div class="follower-txt">
 
+                            <p class="follower-name">
+                                <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                {{ post_of_the_day.user_profile }}  </a>
+                                <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
+                            </p>
+
+
+                        </div>
                     </div>
-
-
+                </div>
+               <div class="postoftheday">
+               <img src="{{ post_of_the_day.images.url }}" alt="">
+               </div>
+                <p class="postoftheday_post">{{ post_of_the_day }}</p>
 
             </div>
 
             <div class="chat">
                 <center>
                     <a href="chating.html">
-                        <button class=" chatbutton btn btn-info">Start Chating</button>
+                        {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
                     </a>
                 </center>
             </div>
         </div>
 
+    </div>
     </div>
 {% endblock %}
