@@ -34,7 +34,7 @@ def index(request):
 
 """ Home page after successful login"""
 
-# def home(request):
+# def home(request)
 #     data = request.user.userprofile
 #     context = {
 #         "data": data
@@ -54,17 +54,17 @@ def search(request):
 
 def postview(request):
     data = request.user.userprofile
-    posts = CrimePost.objects.filter(user_profile=request.user.userprofile).order_by('-posted_on')
+    posts = CrimePost.objects.exclude(user_profile__user__is_active=False).filter(user_profile=request.user.userprofile).order_by('-posted_on')
     current_loggedin_user = request.user
     followings = current_loggedin_user.userprofile.following.all().values_list('pk', flat=True)
     profiles = UserProfile.objects.filter(
         ~Q(following__pk__in=followings) & ~Q(user_id=current_loggedin_user.pk)
     )
-    post_of_the_day = CrimePost.objects.filter(
+    post_of_the_day = CrimePost.objects.exclude(user_profile__user__is_active=False).filter(
 
         posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
         posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
-    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('like_count').first()
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('-like_count').first()
 
     # top_5_post = CrimePost.objects.filter()
     context = {
@@ -80,11 +80,11 @@ def postview(request):
 def userpost(request, id):
     _user = get_object_or_404(UserProfile, pk=id)
     posts = CrimePost.objects.filter(user_profile=_user).order_by('-posted_on')
-    post_of_the_day = CrimePost.objects.filter(
+    post_of_the_day = CrimePost.objects.exclude(user_profile__user__is_active=False).filter(
 
         posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
         posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
-    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('like_count').first()
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('-like_count').first()
 
     context = {
         "data": _user,
@@ -112,17 +112,22 @@ def action_post_view(request):
 
 def post_In_home(request):
     data = request.user.userprofile
-    common_post = CrimePost.objects.all().order_by('-posted_on')
+    common_post = CrimePost.objects.exclude(user_profile__user__is_active=False).all().order_by('-posted_on')
     current_loggedin_user = request.user
     followings = current_loggedin_user.userprofile.following.all().values_list('pk', flat=True)
     profiles = UserProfile.objects.filter(
         ~Q(following__pk__in=followings) & ~Q(user_id=current_loggedin_user.pk)
     )
+    post_of_the_day = CrimePost.objects.exclude(user_profile__user__is_active=False).filter(
 
+        posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
+        posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('-like_count').first()
     context = {
         "data": data,
         "common_post": common_post,
-        'profiles': profiles
+        'profiles': profiles,
+        'post_of_the_day':post_of_the_day
     }
     return render(request, 'home.html', context)
 
@@ -149,9 +154,15 @@ def report_view(request):
         total_liked_users=Count('like__user_id', distinct=True),
 
     )
-    total_system_users = UserProfile.objects.count()
+    total_system_users = UserProfile.objects.count(),
+    post_of_the_day = CrimePost.objects.exclude(user_profile__user__is_active=False).filter(
 
-    return render(request, 'report.html', {'data': queryset, 'total_users': total_system_users, 'userinfo': userinfo})
+        posted_on__gte=datetime.now().replace(hour=0, minute=0, second=0),
+        posted_on__lte=datetime.now().replace(hour=23, minute=59, second=59)
+    ).annotate(like_count=Count('like')).filter(like_count__gt=0).order_by('-like_count').first()
+
+
+    return render(request, 'report.html', {'data': queryset, 'post_of_the_day': post_of_the_day, 'userinfo': userinfo})
 
 
 def crime_view(request):
@@ -260,6 +271,10 @@ class CrimePostApiView(APIView):
             raise Http404
 
     def post(self, request, *args, **kwargs):
+        if request.data.get('action') == 'DEL':
+            pk = request.data['id']
+            CrimePost.objects.get(pk=pk).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         try:
             format, imgstr = request.data['images'].split(';base64,')
             ext = format.split('/')[-1]

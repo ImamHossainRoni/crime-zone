@@ -31,8 +31,8 @@
 
                 <div class="border"></div>
                 <div class="other">
-{#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
-{#                    <p><a href="">Views of your post</a> 45</p>#}
+                    {#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
+                    {#                    <p><a href="">Views of your post</a> 45</p>#}
                 </div>
             </div>
 
@@ -112,35 +112,17 @@
                                 <p class="pp"></p>
                             </div>
 
-                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i class="fa fa-globe"></i>
+                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i
+                                class="fa fa-globe"></i>
                             <br>
                             <p class="fa fa-clock-o"> {{ post.posted_on }}</p>
                             <p class="fa fa-map-marker location"> at Uttara</p>
 
                         </div>
 
-                        <div class="modal_content">
-                            <!-- Trigger the modal with a button -->
-                            <button type="button" class="fa fa-cog settingslogo" data-toggle="modal"
-                                    data-target="#myModal"></button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p><a href="#">Hide from timeline</a></p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="fa fa-cog settingslogo delete-btn"
+                                data-post="{{ post.id }}"></button>
                     </div>
 
 
@@ -210,7 +192,7 @@
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
                                         <span class="commentedon"> at {{ comment.commented_on }}</span>
-{#                                        <button class="reply-button" type="button">Reply</button>#}
+                                        {#                                        <button class="reply-button" type="button">Reply</button>#}
                                     </div>
                                     </p>
                                 </div>
@@ -237,7 +219,7 @@
                                                 <span id="reply-display">{{ reply.reply }}</span>
 
                                             </p>
-                                             <span class="replied_on"> at {{ reply.replied_on }}</span>
+                                            <span class="replied_on"> at {{ reply.replied_on }}</span>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -278,74 +260,79 @@
             </div>
         </div>
     </div>
-<!-- search result -->
-<div class="modal" id="search_id" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-full" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Search Result </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body p-4" id="result">
-                <div class="card-body main_content">
-                    <p id="m-post-img"></p>
-                    <p id="m-post-title">result</p>
-
+    <!-- search result -->
+    <div class="modal" id="search_id" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Search Result </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                <div class="modal-body p-4" id="result">
+                    <div class="card-body main_content">
+                        <p id="m-post-img"></p>
+                        <p id="m-post-title">result</p>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
     <div class="col-md-3 right_sidebar ">
-    <div class="total-rr ">
-        <div class="first-rr">
-            <p class="feed">Post Of The Day</p>
-            <hr>
-            <div class="follower-show-border">
+        <div class="total-rr ">
+            <div class="first-rr">
+                <p class="feed">Post Of The Day</p>
+                <hr>
+                <div class="follower-show-border">
 
-
-                <div class="follower-show">
 
                     <div class="follower-show">
-                        <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
-                                                      alt=""></div>
-                        <div class="follower-txt">
 
-                            <p class="follower-name">
-                                <a href="/users/{{ post_of_the_day.user_profile_id }}">
-                                {{ post_of_the_day.user_profile }}  </a>
-                                <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+                        <div class="follower-show">
+                             {% if post_of_the_day.user_profile.profile_pic %}
+                            <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
+                                                          alt=""></div>
+                            {% endif %}
+                            <div class="follower-txt">
 
-                            </p>
+                                <p class="follower-name">
+                                    <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                        {{ post_of_the_day.user_profile }}  </a>
+                                    <br>
+                                    <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
+                                </p>
 
 
+                            </div>
                         </div>
                     </div>
+                    <div class="postoftheday">
+                           {% if  post_of_the_day.images %}
+                        <img src="{{ post_of_the_day.images.url }}" alt="">
+                        {% endif %}
+                    </div>
+                    <p class="postoftheday_post">{{ post_of_the_day }}</p>
+
                 </div>
-               <div class="postoftheday">
-               <img src="{{ post_of_the_day.images.url }}" alt="">
-               </div>
-                <p class="postoftheday_post">{{ post_of_the_day }}</p>
 
+                <div class="chat">
+                    <center>
+                        <a href="chating.html">
+                            {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
+                        </a>
+                    </center>
+                </div>
             </div>
 
-            <div class="chat">
-                <center>
-                    <a href="chating.html">
-                        {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
-                    </a>
-                </center>
-            </div>
         </div>
-
-    </div>
     </div>
 {% endblock %}

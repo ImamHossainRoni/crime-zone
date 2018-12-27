@@ -27,19 +27,10 @@
             });
             // location.reload();
 
-
         });
 
-// User login end
-
-// var user_name =  $("input[name = 'email']").val(),
-// var firstname =  $("input[name = 'first_name']").val(),
-// var lastname = $("input[name = 'last_name']").val(),
-// var pass1= $("input[name = 'password1']").val(),
-// var pass2 = $("input[name = 'password2']").val()
-
-// User registration
-        $("#signupbutton").on('submit', function () {
+        $("#signupbutton").on('click', function (e) {
+            e.preventDefault();
             $.ajax({
                 url: '/api/create-user/',
                 method: 'POST',
@@ -57,6 +48,11 @@
                 })
 
             }).then(function (res) {
+                if(res.username) {
+                    alert("Successfully Created.")
+                } else {
+                    alert("An Error Occured.")
+                }
             });
             //location.reload();
         });
@@ -113,6 +109,27 @@
             });
         });
         // insert post end
+
+        $(document).on('click', '.delete-btn', function (e) {
+            if (confirm("Are you sure?")) {
+                $.ajax({
+                    url: '/api/post/',
+                    method: 'POST',
+                    headers: {
+                        "X-CSRFToken": localStorage.getItem('csrf_token'),
+                        "Content-Type": 'application/json'
+                    },
+                    processData: false,
+                    data: JSON.stringify({
+                        action: "DEL",
+                        id: $(this).data('post')
+                    })
+
+                }).then(function (res) {
+                    location.reload();
+                });
+            }
+        });
 
         // Modal data show
         $('#postdetails').on('show.bs.modal', function (e) {

@@ -35,7 +35,7 @@
         </div>
         <div>
           <p class="psw">
-            <a data-toggle="modal" data-target="#forgetpassword" href="#">Forgot password? </a>
+{#            <a data-toggle="modal" data-target="#forgetpassword" href="#">Forgot password? </a>#}
           </p>
         </div>
       </form>
@@ -56,7 +56,7 @@
             <div class="loginform">
               <h5>Stay Connected With CrimeZone</h5>
               <!-- registration form -->
-              <form method="POST">
+              <form method="POST" action="#">
                   {% csrf_token %}
                 <div class="form-row">
                   <div class="col">
@@ -67,16 +67,16 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                  <input type="email" name="email" class="form-control" placeholder="Enter email"    required>
                 </div>             
                 <div class="form-group">
-                  <input type="password" name="password1" class="form-control"  placeholder="Password">
+                  <input type="password" name="password1" class="form-control"  placeholder="Password"   required>
                 </div>
                 <div class="form-group">
-                  <input type="password"  name="password2"  class="form-control"  placeholder="Confirm Password">
+                  <input type="password"  name="password2"  class="form-control"  placeholder="Confirm Password"  required>
                 </div>
                
-               <button class=" btn btn-primary" id="signupbutton" type="submit">Sign Up</button>
+               <button class=" btn btn-primary" id="signupbutton" type="button">Sign Up</button>
              </form>
               <!-- registration form End-->
              <div class="formbox">
@@ -116,7 +116,7 @@
            <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"    placeholder="Enter email" required>
               <small id="emailHelp" class="form-text text-muted">You'll never share your email password with anyone else.</small>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

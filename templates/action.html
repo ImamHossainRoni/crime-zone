@@ -107,6 +107,7 @@
         <th scope="col">No</th>
           <th scope="col">User</th>
             <th scope="col">Issue</th>
+            <th scope="col">Content</th>
           <th scope="col">Permission</th>
         </tr>
       </thead>
@@ -121,8 +122,9 @@
             </script>
         <tr>
            <td> <script> document.write(x);</script></td>
-          <td> {{ post.user_profile.name }}</td>
-          <td>{{   post.title}}</td>
+          <td><a href="/users/{{ post.user_profile_id }}">{{ post.user_profile.name }}</td></a>
+        <td><div class="issuepost"><img src=" {{ post.images.url }} " alt=""></div></td>
+          <td><p class="contentissue">{{   post.title}}</p></td>
 
           <td>  <a href="#"
             data-user="{{ post.user_profile.pk }}" class=" deactive-btn">

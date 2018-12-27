@@ -99,7 +99,7 @@
         {% for post in posts %}
             <div class="card">
                 <div class="card-header">
-                    {% if common_post.user_profile.profile_pic %}
+                    {% if post.user_profile.profile_pic %}
 
                         <div class="col-2 profile_picture"><img src="{{ post.user_profile.profile_pic.url }}"
                                                                 alt="nopp"></div>
@@ -302,6 +302,7 @@
                             <p class="follower-name">
                                 <a href="/users/{{ post_of_the_day.user_profile_id }}">
                                 {{ post_of_the_day.user_profile }}  </a>
+                                <br>
                                 <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
 
                             </p>
@@ -311,7 +312,9 @@
                     </div>
                 </div>
                <div class="postoftheday">
+                   {% if post_of_the_day.images  %}
                <img src="{{ post_of_the_day.images.url }}" alt="">
+                   {% endif %}
                </div>
                 <p class="postoftheday_post">{{ post_of_the_day }}</p>
 

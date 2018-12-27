@@ -30,8 +30,8 @@
 
                 <div class="border"></div>
                 <div class="other">
-                    <p><a href="">Who's viewed your profile</a> 100</p>
-                    <p><a href="">Views of your post</a> 45</p>
+{#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
+{#                    <p><a href="">Views of your post</a> 45</p>#}
                 </div>
             </div>
 
@@ -66,18 +66,7 @@
                                     <td>{{ data.user.username }}</td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <th>Password</th>
-                                    <td>******</td>
-                                    <td>
-                                        <button class="btn btn-secondary">Change</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Location</th>
-                                    <td><p class="fa fa-map-marker loc"></p> Uttara</td>
-                                    <td></td>
-                                </tr>
+
 
                             </table>
                         </div>
@@ -99,7 +88,7 @@
         {% for post in common_post %}
             <div class="card">
                 <div class="card-header">
-                     {% if common_post.user_profile.profile_pic %}
+                     {% if post.user_profile.profile_pic %}
 
                     <div class="col-2 profile_picture"><img src="{{ post.user_profile.profile_pic.url }}" alt="nopp"></div>
 
@@ -113,10 +102,10 @@
                                 <p class="pp"></p>
                             </div>
 
-                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i class="fa fa-globe"></i>
+                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }} </a><i class="fa fa-globe"></i>
                             <br>
                             <p class="fa fa-clock-o"> {{ post.posted_on }}</p>
-                            <p class="fa fa-map-marker location"> at Uttara</p>
+
 
                         </div>
 
@@ -133,7 +122,7 @@
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <p><a href="#">Hide from timeline</a></p>
+{#                                            <p><a href="#">Hide from timeline</a></p>#}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" data-dismiss="modal">Close</button>
@@ -213,7 +202,7 @@
                                         <span id="comment-display">{{ comment.comment }}</span>
                                     <div class="time-r-box">
                                        <span class="commentedon"> at {{ comment.commented_on }}</span>
-                                        <button class="reply-button" type="button">Reply</button>
+                                        <button class="reply-button" type="button"></button>
                                     </div>
                                     </p>
                                 </div>
@@ -222,7 +211,7 @@
                                     <input type="hidden" value="{{ comment.id }}">
                                     <button data-post="{{ post.id }}" data-comment="{{ comment.id }}"
                                             class="reply-submit-btn" type="button">
-                                        Save
+                                        Reply
                                     </button>
                                 </div>
                                 {% for reply in comment.reply_set.all %}
@@ -238,7 +227,8 @@
                                                     <b>{{ reply.user.userprofile.name }}</b>
                                                 </a>
                                                 <span id="reply-display">{{ reply.reply }}</span>
-                                                {{ reply.replied_on }}
+                                                <br>
+                                                <span class="replied_on">{{ reply.replied_on }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -284,39 +274,54 @@
 
 
 
+
     <div class="col-md-3 right_sidebar ">
         <div class="total-rr ">
             <div class="first-rr">
-                <p class="feed">Add To Your Feed</p>
+                <p class="feed">Post Of The Day</p>
                 <hr>
                 <div class="follower-show-border">
-                    {% for profile  in profiles %}
+
 
                     <div class="follower-show">
-                               {% if profile.profile_pic %}
-                        <div class="follower-pp"><img src="{{ profile.profile_pic.url }}"></div>
-                               {% endif %}
-                        <div class="follower-txt">
-                            <p class="follower-name">{{ profile.get_username}}
-                                {% if profile.get_username %}
-                                <button class="fright follow-button">Follow</button>
-                                {% endif %}
-                            </p>
+
+                        <div class="follower-show">
+                             {% if post_of_the_day.user_profile.profile_pic %}
+                            <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
+                                                          alt=""></div>
+                            {% endif %}
+                            <div class="follower-txt">
+
+                                <p class="follower-name">
+                                    <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                        {{ post_of_the_day.user_profile }}  </a>
+                                    <br>
+                                    <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
+                                </p>
+
+
+                            </div>
                         </div>
                     </div>
-                    {% endfor %}
+                    <div class="postoftheday">
+                           {% if  post_of_the_day.images %}
+                        <img src="{{ post_of_the_day.images.url }}" alt="">
+                        {% endif %}
+                    </div>
+                    <p class="postoftheday_post">{{ post_of_the_day }}</p>
 
+                </div>
 
+                <div class="chat">
+                    <center>
+                        <a href="chating.html">
+                            {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
+                        </a>
+                    </center>
+                </div>
             </div>
 
-            <div class="chat">
-                <center>
-                    <a href="chating.html">
-                        <button class=" chatbutton btn btn-info">Start Chating</button>
-                    </a>
-                </center>
-            </div>
         </div>
-
     </div>
 {% endblock %}

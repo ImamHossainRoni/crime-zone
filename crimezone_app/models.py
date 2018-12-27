@@ -89,8 +89,8 @@ class CrimePost(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('CrimePost', on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    post = models.ForeignKey('CrimePost', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=100)
     commented_on = models.DateTimeField(auto_now_add=True, auto_now=False)
 
@@ -109,8 +109,8 @@ class Reply(models.Model):
 
 
 class Like(models.Model):
-    post = models.ForeignKey('CrimePost', on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    post = models.ForeignKey('CrimePost', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ("post", "user")

@@ -114,7 +114,7 @@
         </div>
         <div class="square-4">
                 <center> 
-                    <p>Total Starred By</p>
+                    <p>Total Rated By</p>
                 <p>{{data.total_liked_users}}</p>
                </center>
         </div>
@@ -125,23 +125,54 @@
 
 
 {% block feed %}
-    <!-- details post -->
-{##}
-{#    <div class="col-md-3 right_sidebar ">#}
-{#      <div class="total-rr ">#}
-{#        <div class="first-rr">#}
-{#          <p class="feed">Add To Your Feed</p>#}
-{#          <hr>#}
-{#          <div class="follower-show-border">#}
-{#            <div class="follower-show">#}
-{#              <div class="follower-pp"><img src="image/fav.png" alt=""></div>#}
-{#              <div class="follower-txt">#}
-{#                <p class="follower-name">FriendName<button class="fright follow-button">Follow</button></p>#}
-{#              </div>#}
-{#            </div>#}
-{#          </div>#}
-{#        </div> #}
-{#      </div>#}
-{#    </div>#}
+   <div class="col-md-3 right_sidebar ">
+        <div class="total-rr ">
+            <div class="first-rr">
+                <p class="feed">Post Of The Day</p>
+                <hr>
+                <div class="follower-show-border">
+
+
+                    <div class="follower-show">
+
+                        <div class="follower-show">
+                             {% if post_of_the_day.user_profile.profile_pic %}
+                            <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
+                                                          alt=""></div>
+                            {% endif %}
+                            <div class="follower-txt">
+
+                                <p class="follower-name">
+                                    <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                        {{ post_of_the_day.user_profile }}  </a>
+                                    <br>
+                                    <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
+                                </p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="postoftheday">
+                           {% if  post_of_the_day.images %}
+                        <img src="{{ post_of_the_day.images.url }}" alt="">
+                        {% endif %}
+                    </div>
+                    <p class="postoftheday_post">{{ post_of_the_day }}</p>
+
+                </div>
+
+                <div class="chat">
+                    <center>
+                        <a href="chating.html">
+                            {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
+                        </a>
+                    </center>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 {% endblock %}
