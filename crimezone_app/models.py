@@ -30,14 +30,14 @@ class UserProfile(models.Model):
             return "{0} {1}".format(self.user.first_name, self.user.last_name)
         except Exception:
             return self.user.username
-
+    @property
     def get_number_of_followers(self):
         print(self.followers.count())
         if self.followers.count():
             return self.followers.count()
         else:
             return 0
-
+    @property
     def get_number_of_following(self):
         print(self.following.count())
         if self.following.count():
@@ -62,9 +62,10 @@ class CrimePost(models.Model):
     images = models.ImageField(upload_to='post_images', null=True, blank=True)
     posted_on = models.DateTimeField(auto_now_add=True, auto_now=False)
 
+    @property
     def get_number_of_likes(self):
         return self.like_set.count()
-
+    @property
     def get_number_of_comments(self):
         return self.comment_set.count()
 

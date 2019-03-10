@@ -2,256 +2,87 @@
 {% load static %}
 
 {% block profile %}
-    <div class="col-md-3 left_sidebar">
-        <div class="total-pp" id="user-profile">
-            <div class="user-profile-background">
-                <div class="user-profile-pp">
-                    {% if data.profile_pic %}
-                        <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
+<div class="col-md-3 left_sidebar">
+    <div class="total-pp" id="user-profile">
+        <div class="user-profile-background">
+            <div class="user-profile-pp">
+                {% if data.profile_pic %}
+                <a href="/post"> <img src="{{ data.profile_pic.url }}"></a>
 
-                    {% else %}
+                {% else %}
 
-                        <a href="/post"><img src="{% static  'image/fav.png' %}"></a>
-                    {% endif %}
-                </div>
-                <div class="user-pp" id="user-profile">
+                <a href="/post"><img src="{% static  'image/fav.png' %}"></a>
+                {% endif %}
+            </div>
+            <div class="user-pp" id="user-profile">
 
 
-                    <h5 class="name">{{ data.get_username }} </h5>
-                    <p class="email">{{ data.user.username }}</p>
-                    <p class="fa fa-map-marker loc"> Dhaka</p>
-                    <p class="fa fa-clock-o datetime"> {{ data.joining_time }}</p>
+                <h5 class="name">{{ data.get_username }} </h5>
+                <p class="email">{{ data.user.username }}</p>
+                <p class="fa fa-map-marker loc"> Dhaka</p>
+                <p class="fa fa-clock-o datetime"> {{ data.joining_time }}</p>
 
-                </div>
-                <div class="option">
-                    <p><a class="fa fa-th menu userdetails" href="#" data-toggle="modal" data-target="#userdetails"
-                          data-backdrop="static" data-keyboard="false"></a></p>
+            </div>
+            <div class="option">
+                <p><a class="fa fa-th menu userdetails" href="#" data-toggle="modal" data-target="#userdetails"
+                        data-backdrop="static" data-keyboard="false"></a></p>
 
-                </div>
-
-                <div class="border"></div>
-                <div class="other">
-                    {#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
-                    {#                    <p><a href="">Views of your post</a> 45</p>#}
-                </div>
             </div>
 
-        </div>
-        <!-- details -->
-
-        <div class="modal animate" id="userdetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Profile Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="userinfotable">
-                            <table class="table">
-                                <tr>
-                                    <th>First Name:</th>
-                                    <td>{{ data.user.first_name }} </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>Last Name:</th>
-                                    <td>{{ data.user.last_name }}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>{{ data.user.username }}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>Password</th>
-                                    <td>******</td>
-                                    <td>
-                                        <button class="btn btn-secondary">Change</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Location</th>
-                                    <td><p class="fa fa-map-marker loc"></p> Uttara</td>
-                                    <td></td>
-                                </tr>
-
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
+            <div class="border"></div>
+            <div class="other">
+                {#                    <p><a href="">Who's viewed your profile</a> 100</p>#}
+                {#                    <p><a href="">Views of your post</a> 45</p>#}
             </div>
         </div>
-        <!-- end -->
-
 
     </div>
-{% endblock %}
+    <!-- details -->
 
-{% block content %}
-    <div class="col-md-6 main_content">
-        {% for post in posts %}
-            <div class="card">
-                <div class="card-header">
-                    {% if data.profile_pic %}
-
-                        <div class="col-2 profile_picture"><img src="{{ data.profile_pic.url }}" alt="nopp"></div>
-                    {% else %}
-                        <div class="col-2 profile_picture"><img src="{% static  'image/fav.png' %}"></div>
-                    {% endif %}
-                    <div class="col-10 friend_name">
-                        <div class="friend_name_description">
-                            <div class="idno">
-                                <p class="pp"></p>
-                            </div>
-
-                            <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i
-                                class="fa fa-globe"></i>
-                            <br>
-                            <p class="fa fa-clock-o"> {{ post.posted_on }}</p>
-                            <p class="fa fa-map-marker location"> at Uttara</p>
-
-                        </div>
-
-                        <!-- Trigger the modal with a button -->
-                        <button type="button" class="fa fa-cog settingslogo delete-btn"
-                                data-post="{{ post.id }}"></button>
-                    </div>
-
-
-                </div>
-                <div class="card-body main_content">
-                    {% if post.images %}
-                        <p><img src="{{ post.images.url }}" alt="noimg"></p>
-                    {% endif %}
-                    <p>
-                        {% if post.title|length|get_digit:"-1" > 100 %}
-                            {{ post.title|truncatechars:100 }}
-                            {% if post.images %}
-                                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
-                                   data-photo="{{ post.images.url }}" data-status="{{ post.title }}">
-                                    Read More
-                                </a>
-                            {% else %}
-
-                                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
-                                   data-status="{{ post.title }}">
-                                    Read More
-                                </a>
-                            {% endif %}
-                        {% else %}
-                            {{ post.title }}
-                        {% endif %}
-                    </p>
-
-                </div>
-
-                <div class="card-footer">
-                    <form class="comment-form" action="#">
-                        <div class="col-4 like">
-                            <a class="fa fa-star-o likebutton" data-post="{{ post.id }}">
-                                {% if post.is_liked_by_me %}
-                                    <span class="like-unlike-btn-text-{{ post.id }}">Unstar</span>
-                                {% else %}
-                                    <span class="like-unlike-btn-text-{{ post.id }}">Star</span>
-                                {% endif %}
-                                <span id="like-count-{{ post.id }}">({{ post.like_set.count }})</span>
-                            </a>
-                        </div>
-                        <div class="col-6 comment ">
-                            <a class="fa fa-comment-o commentbutton" href="#"> Comment</a>
-                        </div>
-                        <div class="col-2 share">
-                            <a class="fa fa-share-alt sharebutton" href="#"> Share</a>
-                        </div>
-                        <div class="space"></div>
-                        <div class="form-group write-comment">
-                            <i class="fa fa-comments-o icon"></i>
-                            <input type="text" class="form-control commentbox"
-                                   placeholder="Say something">
-                            <input type="hidden" value="{{ post.id }}">
-                            <button type="submit" class="c_btn">Comment</button>
-                        </div>
-                        {% for comment in post.comment_set.all %}
-                            <div class="comment-show">
-                                {% if comment.user.userprofile.profile_pic %}
-                                    <div class="comment-pp">
-                                        <img src="{{ comment.user.userprofile.profile_pic.url }}" alt="">
-                                    </div>
-                                {% endif %}
-                                <div class="comment-txt">
-                                    <p class="comment-user-name">
-                                        <a href="/users/{{ post.user_profile_id }}"><b>{{ comment.user.userprofile.name }}</b></a>
-                                        <span id="comment-display">{{ comment.comment }}</span>
-                                    <div class="time-r-box">
-                                        <span class="commentedon"> at {{ comment.commented_on }}</span>
-                                        {#                                        <button class="reply-button" type="button">Reply</button>#}
-                                    </div>
-                                    </p>
-                                </div>
-                                <div class="reply-form">
-                                    <input type="text" name="reply-txt">
-                                    <input type="hidden" value="{{ comment.id }}">
-                                    <button data-post="{{ post.id }}" data-comment="{{ comment.id }}"
-                                            class="reply-submit-btn" type="button">
-                                        Reply
-                                    </button>
-                                </div>
-                                {% for reply in comment.reply_set.all %}
-                                    <div class="reply-show">
-                                        <div class="reply-pp">
-                                            {% if reply.user.userprofile.profile_pic %}
-                                                <img src="{{ reply.user.userprofile.profile_pic.url }}" alt="">
-                                            {% endif %}
-                                        </div>
-                                        <div class="reply-txt">
-                                            <p class="reply-user-name">
-                                                <a href="/users/{{ post.user_profile_id }}">
-                                                    <b>{{ reply.user.userprofile.name }}</b>
-                                                </a>
-                                                <span id="reply-display">{{ reply.reply }}</span>
-
-                                            </p>
-                                            <span class="replied_on"> at {{ reply.replied_on }}</span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-                        {% endfor %}
-                    </form>
-
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endblock %}
-
-
-{% block feed %}
-    <!-- details post -->
-
-    <div class="modal" id="postdetails" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full" role="document">
+    <div class="modal animate" id="userdetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">More Details </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Profile Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body p-4" id="result">
-                    <div class="card-body main_content">
-                        <p id="m-post-img"></p>
-                        <p id="m-post-title">{{ post.title }}</p>
+                <div class="modal-body">
+                    <div class="userinfotable">
+                        <table class="table">
+                            <tr>
+                                <th>First Name:</th>
+                                <td>{{ data.user.first_name }} </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Last Name:</th>
+                                <td>{{ data.user.last_name }}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ data.user.username }}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Password</th>
+                                <td>******</td>
+                                <td>
+                                    <button class="btn btn-secondary">Change</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>
+                                    <p class="fa fa-map-marker loc"></p> Uttara
+                                </td>
+                                <td></td>
+                            </tr>
 
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -260,79 +91,247 @@
             </div>
         </div>
     </div>
-    <!-- search result -->
-    <div class="modal" id="search_id" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Search Result </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body p-4" id="result">
-                    <div class="card-body main_content">
-                        <p id="m-post-img"></p>
-                        <p id="m-post-title">result</p>
+    <!-- end -->
 
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-6 main_content">
+    {% for post in posts %}
+    <div class="card">
+        <div class="card-header">
+            {% if data.profile_pic %}
+
+            <div class="col-2 profile_picture"><img src="{{ data.profile_pic.url }}" alt="nopp"></div>
+            {% else %}
+            <div class="col-2 profile_picture"><img src="{% static  'image/fav.png' %}"></div>
+            {% endif %}
+            <div class="col-10 friend_name">
+                <div class="friend_name_description">
+                    <div class="idno">
+                        <p class="pp"></p>
                     </div>
+
+                    <a href="/users/{{ post.user_profile_id }}">{{ post.user_profile }}</a><i class="fa fa-globe"></i>
+                    <br>
+                    <p class="fa fa-clock-o"> {{ post.posted_on }}</p>
+                    <p class="fa fa-map-marker location"> at Uttara</p>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                </div>
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="fa fa-cog settingslogo delete-btn" data-post="{{ post.id }}"></button>
             </div>
+
+
         </div>
-    </div>
+        <div class="card-body main_content">
+            {% if post.images %}
+            <p><img src="{{ post.images.url }}" alt="noimg"></p>
+            {% endif %}
+            <p>
+                {% if post.title|length|get_digit:"-1" > 100 %}
+                {{ post.title|truncatechars:100 }}
+                {% if post.images %}
+                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
+                    data-photo="{{ post.images.url }}" data-status="{{ post.title }}">
+                    Read More
+                </a>
+                {% else %}
 
+                <a class="readmore" id="readmore" href="" data-toggle="modal" data-target="#postdetails"
+                    data-status="{{ post.title }}">
+                    Read More
+                </a>
+                {% endif %}
+                {% else %}
+                {{ post.title }}
+                {% endif %}
+            </p>
 
+        </div>
 
-    <div class="col-md-3 right_sidebar ">
-        <div class="total-rr ">
-            <div class="first-rr">
-                <p class="feed">Post Of The Day</p>
-                <hr>
-                <div class="follower-show-border">
-
-
-                    <div class="follower-show">
-
-                        <div class="follower-show">
-                             {% if post_of_the_day.user_profile.profile_pic %}
-                            <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}"
-                                                          alt=""></div>
-                            {% endif %}
-                            <div class="follower-txt">
-
-                                <p class="follower-name">
-                                    <a href="/users/{{ post_of_the_day.user_profile_id }}">
-                                        {{ post_of_the_day.user_profile }}  </a>
-                                    <br>
-                                    <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
-
-                                </p>
-
-
+        <div class="card-footer">
+            <form class="comment-form" action="#">
+                <div class="col-4 like">
+                    <a class="fa fa-star-o likebutton" data-post="{{ post.id }}">
+                        {% if post.is_liked_by_me %}
+                        <span class="like-unlike-btn-text-{{ post.id }}">Unstar</span>
+                        {% else %}
+                        <span class="like-unlike-btn-text-{{ post.id }}">Star</span>
+                        {% endif %}
+                        <span id="like-count-{{ post.id }}">({{ post.like_set.count }})</span>
+                    </a>
+                </div>
+                <div class="col-6 comment ">
+                    <a class="fa fa-comment-o commentbutton" href="#"> Comment</a>
+                </div>
+                <div class="col-2 share">
+                    <a class="fa fa-share-alt sharebutton" href="#"> Share</a>
+                </div>
+                <div class="space"></div>
+                <div class="form-group write-comment">
+                    <i class="fa fa-comments-o icon"></i>
+                    <input type="text" class="form-control commentbox" placeholder="Say something">
+                    <input type="hidden" value="{{ post.id }}">
+                    <button type="submit" class="c_btn">Comment</button>
+                </div>
+                {% for comment in post.comment_set.all %}
+                <div class="comment-show">
+                    {% if comment.user.userprofile.profile_pic %}
+                    <div class="comment-pp">
+                        <img src="{{ comment.user.userprofile.profile_pic.url }}" alt="">
+                    </div>
+                    {% endif %}
+                    <div class="comment-txt">
+                        <p class="comment-user-name">
+                            <a href="/users/{{ post.user_profile_id }}"><b>{{ comment.user.userprofile.name }}</b></a>
+                            <span id="comment-display">{{ comment.comment }}</span>
+                            <div class="time-r-box">
+                                <span class="commentedon"> at {{ comment.commented_on }}</span>
+                                {#                                        <button class="reply-button" type="button">Reply</button>#}
                             </div>
+                        </p>
+                    </div>
+                    <div class="reply-form">
+                        <input type="text" name="reply-txt">
+                        <input type="hidden" value="{{ comment.id }}">
+                        <button data-post="{{ post.id }}" data-comment="{{ comment.id }}" class="reply-submit-btn"
+                            type="button">
+                            Reply
+                        </button>
+                    </div>
+                    {% for reply in comment.reply_set.all %}
+                    <div class="reply-show">
+                        <div class="reply-pp">
+                            {% if reply.user.userprofile.profile_pic %}
+                            <img src="{{ reply.user.userprofile.profile_pic.url }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="reply-txt">
+                            <p class="reply-user-name">
+                                <a href="/users/{{ post.user_profile_id }}">
+                                    <b>{{ reply.user.userprofile.name }}</b>
+                                </a>
+                                <span id="reply-display">{{ reply.reply }}</span>
+
+                            </p>
+                            <span class="replied_on"> at {{ reply.replied_on }}</span>
                         </div>
                     </div>
-                    <div class="postoftheday">
-                           {% if  post_of_the_day.images %}
-                        <img src="{{ post_of_the_day.images.url }}" alt="">
-                        {% endif %}
-                    </div>
-                    <p class="postoftheday_post">{{ post_of_the_day }}</p>
+                    {% endfor %}
 
                 </div>
-
-                <div class="chat">
-                    <center>
-                        <a href="chating.html">
-                            {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
-                        </a>
-                    </center>
-                </div>
-            </div>
+                {% endfor %}
+            </form>
 
         </div>
     </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block feed %}
+<!-- details post -->
+
+<div class="modal" id="postdetails" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">More Details </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-4" id="result">
+                <div class="card-body main_content">
+                    <p id="m-post-img"></p>
+                    <p id="m-post-title">{{ post.title }}</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search result -->
+<div class="modal" id="search_id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search Result </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-4" id="result">
+                <div class="card-body main_content">
+                    <p id="m-post-img"></p>
+                    <p id="m-post-title">result</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-3 right_sidebar ">
+    <div class="total-rr ">
+        <div class="first-rr">
+            <p class="feed">Post Of The Day</p>
+            <hr>
+            <div class="follower-show-border">
+
+
+                <div class="follower-show">
+
+                    <div class="follower-show">
+                        {% if post_of_the_day.user_profile.profile_pic %}
+                        <div class="follower-pp"><img src="{{ post_of_the_day.user_profile.profile_pic.url }}" alt="">
+                        </div>
+                        {% endif %}
+                        <div class="follower-txt">
+
+                            <p class="follower-name">
+                                <a href="/users/{{ post_of_the_day.user_profile_id }}">
+                                    {{ post_of_the_day.user_profile }} </a>
+                                <br>
+                                <span class="posted_on">{{ post_of_the_day.posted_on }}</span>
+
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="postoftheday">
+                    {% if  post_of_the_day.images %}
+                    <img src="{{ post_of_the_day.images.url }}" alt="">
+                    {% endif %}
+                </div>
+                <p class="postoftheday_post">{{ post_of_the_day }}</p>
+
+            </div>
+
+            <div class="chat">
+                <center>
+                    <a href="chating.html">
+                        {#                        <button class=" chatbutton btn btn-info">Start Chating</button>#}
+                    </a>
+                </center>
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
